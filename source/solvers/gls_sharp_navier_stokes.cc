@@ -2648,6 +2648,7 @@ GLSSharpNavierStokesSolver<dim>::solve()
         }
       else
         {
+          ib_done.clear();
           refine_ib();
           NavierStokesBase<dim, TrilinosWrappers::MPI::Vector, IndexSet>::
             refine_mesh();
