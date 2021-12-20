@@ -526,55 +526,70 @@ GLSSharpNavierStokesSolver<dim>::force_on_ib()
                             projection_cell_face);
                           std::vector<Point<dim>> q_points =
                             fe_face_projection_values.get_quadrature_points();
-                          FullMatrix<double> interpolation_matrix(
-                            local_face_dof_indices.size(),
-                            local_face_dof_indices.size());
-                          FullMatrix<double> inv_interpolation_matrix(
-                            local_face_dof_indices.size(),
-                            local_face_dof_indices.size());
-                          for (unsigned int i = 0;
-                               i < local_face_dof_indices.size();
-                               ++i)
+                          if (this->simulation_parameters.fem_parameters.velocity_order>1)
                             {
-                              Point<dim> point_projection =
-                                particles[p].position +
-                                particles[p].radius *
-                                  (support_points[local_face_dof_indices[i]] -
-                                   particles[p].position) /
-                                  (support_points[local_face_dof_indices[i]] -
-                                   particles[p].position)
-                                    .norm();
+                              FullMatrix<double> interpolation_matrix(
+                                local_face_dof_indices.size(),
+                                local_face_dof_indices.size());
+                              FullMatrix<double> inv_interpolation_matrix(
+                                local_face_dof_indices.size(),
+                                local_face_dof_indices.size());
+                              for (unsigned int i = 0;
+                                   i < local_face_dof_indices.size();
+                                   ++i)
+                                {
+                                  Point<dim> point_projection =
+                                    particles[p].position +
+                                    particles[p].radius *
+                                      (support_points
+                                         [local_face_dof_indices[i]] -
+                                       particles[p].position) /
+                                      (support_points
+                                         [local_face_dof_indices[i]] -
+                                       particles[p].position)
+                                        .norm();
 
-                              auto projected_point_unit =
-                                local_face_map.transform_real_to_unit_cell(
-                                  projection_cell_face, point_projection);
-                              for (unsigned int j = 0;
-                                   j < local_face_dof_indices.size();
-                                   ++j)
+                                  auto projected_point_unit =
+                                    local_face_map.transform_real_to_unit_cell(
+                                      projection_cell_face, point_projection);
+                                  for (unsigned int j = 0;
+                                       j < local_face_dof_indices.size();
+                                       ++j)
+                                    {
+                                      double prod = 1;
+                                      if (this->fe
+                                            ->face_system_to_component_index(j)
+                                            .first !=
+                                          this->fe
+                                            ->face_system_to_component_index(i)
+                                            .first)
+                                        prod = 0;
+                                      interpolation_matrix[i][j] =
+                                        local_face_fe.shape_value(
+                                          j, projected_point_unit) *
+                                        prod;
+                                    }
+                                }
+                              inv_interpolation_matrix.invert(
+                                interpolation_matrix);
+                              for (unsigned int i = 0;
+                                   i < local_face_dof_indices.size();
+                                   ++i)
                                 {
-                                  double prod=1;
-                                  if(this->fe->face_system_to_component_index(j).first!=this->fe->face_system_to_component_index(i).first)
-                                    prod=0;
-                                  interpolation_matrix[i][j] =
-                                    local_face_fe.shape_value(
-                                      j, projected_point_unit)*prod;
+                                  for (unsigned int j = 0;
+                                       j < local_face_dof_indices.size();
+                                       ++j)
+                                    {
+                                      local_face_tensor[i] +=
+                                        inv_interpolation_matrix[i][j] *
+                                        local_face_tensor_old[j];
+                                    }
                                 }
                             }
-                          inv_interpolation_matrix.invert(interpolation_matrix);
-                          for (unsigned int i = 0;
-                               i < local_face_dof_indices.size();
-                               ++i)
+                          else
                             {
-                              for (unsigned int j = 0;
-                                   j < local_face_dof_indices.size();
-                                   ++j)
-                                {
-                                  local_face_tensor[i] +=
-                                    inv_interpolation_matrix[i][j] *
-                                    local_face_tensor_old[j];
-                                }
+                              local_face_tensor = local_face_tensor_old;
                             }
-                          //local_face_tensor = local_face_tensor_old;
                           for (unsigned int q = 0; q < n_q_points_face; q++)
                             {
                               // Evaluate the total surface
@@ -1075,6 +1090,8 @@ GLSSharpNavierStokesSolver<dim>::integrate_particles()
   particle_residual = 0;
   if (this->simulation_parameters.particlesParameters->integrate_motion)
     {
+      Vector<double> particles_residual_vect;
+      particles_residual_vect.reinit(particles.size());
       ib_dem.particles_dem(dt);
       for (unsigned int p = 0; p < particles.size(); ++p)
         {
@@ -1098,7 +1115,7 @@ GLSSharpNavierStokesSolver<dim>::integrate_particles()
           // Define the gravity force applied on the particle based on his masse
           // Evaluate the velocity of the particle
 
-          particles[p].impulsion = ib_dem.dem_particles[p].impulsion;
+          particles[p].impulsion = ib_dem.dem_particles[p].impulsion+ ib_dem.dem_particles[p].contact_impulsion;
           particles[p].omega_impulsion =
             ib_dem.dem_particles[p].omega_impulsion;
           particles[p].contact_impulsion =
@@ -1121,7 +1138,7 @@ GLSSharpNavierStokesSolver<dim>::integrate_particles()
                 -(bdf_coefs[i] * particles[p].last_velocity[i - 1]);
             }
           residual_velocity +=
-            (particles[p].impulsion + particles[p].contact_impulsion) /
+            (particles[p].impulsion ) /
             particles[p].mass / dt;
 
           Tensor<2, dim> jac_velocity;
@@ -1151,26 +1168,109 @@ GLSSharpNavierStokesSolver<dim>::integrate_particles()
                                                            dt;
                 }
             }
-          particles[p].velocity_iter = particles[p].velocity;
-          particles[p].velocity =
-            particles[p].velocity_iter -
-            invert(jac_velocity) * residual_velocity * alpha;
-          particles[p].impulsion_iter = particles[p].impulsion;
-          if (particles[p].contact_impulsion.norm() < 1e-12)
+          double local_alpha = 1;
+          IBParticle<dim> save_particle_state=particles[p];
+          bool save_particle_state_is_used=false;
+          try
             {
-              particles[p].position.clear();
-              for (unsigned int i = 1;
-                   i < number_of_previous_solutions(method) + 1;
-                   ++i)
+              auto dv = invert(jac_velocity) * residual_velocity;
+
+              /*if ((particles[p].velocity - particles[p].velocity_iter).norm() >
+                  0)
+                local_alpha =
+                  sqrt(particles[p].last_d_velocity.norm()*particles[p].last_local_alpha / dv.norm());*/
+              /*if ((particles[p].velocity - particles[p].velocity_iter).norm() >
+                  0)
+                local_alpha =
+                  abs(scalar_product(particles[p].velocity -
+                                       particles[p].velocity_iter,
+                                     dv - particles[p].last_d_velocity)) /
+                  (dv - particles[p].last_d_velocity).norm_square();*/
+              if ((particles[p].velocity - particles[p].velocity_iter).norm() >
+                  0)
                 {
-                  particles[p].position += -bdf_coefs[i] *
-                                           particles[p].last_position[i - 1] /
-                                           bdf_coefs[0];
+                  double matrix_alpha = 0;
+                  double rhs_alpha    = 0;
+                  for (unsigned int d = 0; d < dim; ++d)
+                    {
+                      double c1 = 2 * (dv[d] - particles[p].last_d_velocity[d]*particles[p].last_local_alpha);
+                      matrix_alpha +=
+                        -particles[p].last_d_velocity[d]*particles[p].last_local_alpha * c1 + dv[d] * c1;
+                      rhs_alpha+= -particles[p].last_d_velocity[d]*particles[p].last_local_alpha * c1;
+                    }
+                  if(matrix_alpha!=0)
+                    local_alpha=rhs_alpha/matrix_alpha;
+                  else
+                    local_alpha=1;
                 }
-              particles[p].position += particles[p].velocity / bdf_coefs[0];
+              /*if ((particles[p].velocity - particles[p].velocity_iter).norm() >
+                  0)
+                {
+                  double matrix_alpha = 0;
+                  double rhs_alpha    = 0;
+                  for (unsigned int d = 0; d < dim; ++d)
+                    {
+                      matrix_alpha +=(-dv[d]*particles[p].last_d_velocity[d]*particles[p].last_local_alpha+particles[p].last_d_velocity[d]*particles[p].last_d_velocity[d]*particles[p].last_local_alpha*particles[p].last_local_alpha);
+                      rhs_alpha+= particles[p].last_d_velocity[d]*particles[p].last_d_velocity[d]*particles[p].last_local_alpha*particles[p].last_local_alpha ;
+                    }
+                  if(matrix_alpha!=0)
+                    local_alpha=abs(rhs_alpha/(matrix_alpha));
+                  else
+                    local_alpha=1;
+                }*/
+
+              /*local_alpha=std::max(sqrt(particles[p].last_d_velocity.norm()*particles[p].last_local_alpha / dv.norm()), local_alpha);
+              local_alpha=sqrt(particles[p].last_d_velocity.norm()*particles[p].last_local_alpha / dv.norm());*/
+
+              this->pcout << "particle " << p
+                          << " local alpha : " << local_alpha << " residual "
+                          << residual_velocity.norm() * dt << std::endl;
+              if (local_alpha > 1)
+                local_alpha = 1;
+              if (local_alpha < 0)
+                local_alpha = 0;
+
+
+              this->pcout << "particle " << p
+                          << " local alpha : " << local_alpha << " residual "
+                          << residual_velocity.norm() * dt << std::endl;
+
+              particles[p].velocity_iter = particles[p].velocity;
+              particles[p].velocity =
+                particles[p].velocity_iter -
+                dv* alpha * local_alpha;
+              particles[p].impulsion_iter  = particles[p].impulsion;
+              particles[p].last_d_velocity = dv;
+              particles[p].last_local_alpha = local_alpha;
+
+
+              if (particles[p].contact_impulsion.norm() < 1e-12)
+                {
+                  particles[p].position.clear();
+                  for (unsigned int i = 1;
+                       i < number_of_previous_solutions(method) + 1;
+                       ++i)
+                    {
+                      particles[p].position +=
+                        -bdf_coefs[i] * particles[p].last_position[i - 1] /
+                        bdf_coefs[0];
+                    }
+                  particles[p].position += particles[p].velocity / bdf_coefs[0];
+                }
+              else
+                {
+                  particles[p].position = particles[p].position+ local_alpha*(ib_dem.dem_particles[p].position-particles[p].position);
+                }
+              const auto &cell = LetheGridTools::find_cell_around_point_with_tree(
+                this->dof_handler, particles[p].position);
             }
-          else
-            particles[p].position = ib_dem.dem_particles[p].position;
+
+          catch(...){
+              this->pcout << "particle " << p
+                          << " is now outside the domain we do not update this particle  "
+                          << std::endl;
+              save_particle_state_is_used=true;
+            }
 
           // For the rotation velocity : same logic as the velocity.
           auto inv_inertia = invert(particles[p].inertia);
@@ -1215,22 +1315,44 @@ GLSSharpNavierStokesSolver<dim>::integrate_particles()
                         particles[p].radius * inv_inertia[d][d] / dt;
                 }
             }
+          auto d_omega=invert(jac_omega) * residual_omega;
+          local_alpha=1;
+          if(d_omega.norm()>particles[p].residual_omega)
+            local_alpha=particles[p].residual_omega/d_omega.norm();
+
+          if((particles[p].omega-particles[p].omega_iter).norm()>0)
+            local_alpha= abs(scalar_product(particles[p].omega-particles[p].omega_iter,d_omega-particles[p].last_d_omega))/(d_omega-particles[p].last_d_omega).norm_square();
+
+          std::max(particles[p].residual_omega/d_omega.norm(),local_alpha);
+
+          if(local_alpha>1)
+            local_alpha=1;
+
+
           particles[p].omega_iter = particles[p].omega;
           particles[p].omega      = particles[p].omega_iter -
-                               invert(jac_omega) * residual_omega * alpha;
-
+                               invert(jac_omega) * residual_omega * alpha*local_alpha;
           particles[p].omega_impulsion_iter = particles[p].omega_impulsion;
+          particles[p].last_d_omega=d_omega;
+
+
+
+
+          if(save_particle_state_is_used)
+            particles[p]=save_particle_state;
+
 
           double this_particle_residual =
-            sqrt(residual_velocity.norm() * residual_velocity.norm() +
-                 residual_omega.norm() * residual_omega.norm());
+            sqrt( std::pow((particles[p].omega- particles[p].omega_iter).norm(),2)+std::pow((particles[p].velocity- particles[p].velocity_iter).norm(),2));
+          this_particle_residual =
+            sqrt( std::pow(residual_velocity.norm(),2)+std::pow(residual_omega.norm(),2))*dt;
 
           if (this->simulation_parameters.non_linear_solver.verbosity !=
               Parameters::Verbosity::quiet)
             {
-              this->pcout << " contact_impulsion "
+              /*this->pcout << " contact_impulsion "
                           << particles[p].contact_impulsion << std::endl;
-              this->pcout << "particle " << p << " residual "
+this->pcout << "particle " << p << " residual "
                           << this_particle_residual << " particle velocity "
                           << particles[p].velocity << " residual "
                           << (particles[p].position -
@@ -1239,11 +1361,30 @@ GLSSharpNavierStokesSolver<dim>::integrate_particles()
                           << " particle position " << particles[p].position
                           << " particle force" << particles[p].forces
                           << " particle impulsion " << particles[p].impulsion
-                          << std::endl;
+                          << std::endl;*/
             }
-          particles[p].residual = this_particle_residual;
+          particles[p].residual_velocity =(particles[p].velocity- particles[p].velocity_iter).norm();
+          particles[p].residual_omega =(particles[p].omega- particles[p].omega_iter).norm();
+          particles_residual_vect[p]=this_particle_residual;
           if (this_particle_residual > particle_residual)
             particle_residual = this_particle_residual;
+        }
+
+      this->pcout << "particle residual "
+                  << particle_residual<<std::endl;
+      this->pcout << "particle residual L2 "
+                  << particles_residual_vect.l2_norm()<<std::endl;
+
+      table_residual.add_value("matrix_residual", this->system_rhs.l2_norm());
+      table_residual.set_precision("matrix_residual", 12);
+      for (unsigned int p = 0; p < particles.size(); ++p)
+        {
+          table_residual.add_value("particles_residual" +
+                                     Utilities::int_to_string(p, 2),
+                                   particles[p].residual_velocity);
+          table_residual.set_precision("particles_residual" +
+                                         Utilities::int_to_string(p, 2),
+                                       12);
         }
     }
   else
@@ -1425,6 +1566,8 @@ GLSSharpNavierStokesSolver<dim>::finish_time_step_particles()
       particles[p].impulsion_iter       = particles[p].impulsion;
       particles[p].omega_iter           = particles[p].omega;
       particles[p].omega_impulsion_iter = particles[p].omega_impulsion;
+      particles[p].residual_velocity=DBL_MAX;
+      particles[p].residual_omega=DBL_MAX;
 
 
 
@@ -2128,17 +2271,6 @@ GLSSharpNavierStokesSolver<dim>::sharp_edge()
   this->system_rhs.compress(VectorOperation::insert);
   this->system_matrix.compress(VectorOperation::insert);
 
-  table_residual.add_value("matrix_residual", this->system_rhs.l2_norm());
-  table_residual.set_precision("matrix_residual", 12);
-  for (unsigned int p = 0; p < particles.size(); ++p)
-    {
-      table_residual.add_value("particles_residual" +
-                                 Utilities::int_to_string(p, 2),
-                               particles[p].residual);
-      table_residual.set_precision("particles_residual" +
-                                     Utilities::int_to_string(p, 2),
-                                   12);
-    }
 }
 
 
@@ -2573,10 +2705,15 @@ GLSSharpNavierStokesSolver<dim>::read_checkpoint()
           particles[p_i].torques[1]  = restart_data["T_y"][p_i];
           particles[p_i].torques[2]  = restart_data["T_z"][p_i];
 
-          particles[p_i].last_position[0]   = particles[p_i].position;
-          particles[p_i].last_velocity[0]   = particles[p_i].velocity;
+          for(unsigned int i=0;i<particles[p_i].last_position.size();++i)
+            {
+              particles[p_i].last_position[i] = particles[p_i].position;
+              particles[p_i].last_velocity[i] = particles[p_i].velocity;
+              particles[p_i].last_omega[i]    = particles[p_i].omega;
+            }
+
           particles[p_i].last_forces        = particles[p_i].forces;
-          particles[p_i].last_omega[0]      = particles[p_i].omega;
+
           particles[p_i].local_alpha_torque = 1;
           particles[p_i].local_alpha_force  = 1;
         }
@@ -2597,6 +2734,8 @@ GLSSharpNavierStokesSolver<dim>::solve()
     this->simulation_parameters.restart_parameters.restart,
     this->simulation_parameters.boundary_conditions);
 
+
+  //GridTools::distort_random(0.2,*this->triangulation);
   define_particles();
   this->setup_dofs();
   this->box_refine_mesh();
@@ -2619,6 +2758,7 @@ GLSSharpNavierStokesSolver<dim>::solve()
           refine_ib();
           NavierStokesBase<dim, TrilinosWrappers::MPI::Vector, IndexSet>::
             refine_mesh();
+
         }
       this->simulation_parameters.mesh_adaptation.refinement_fraction =
         temp_refine;
@@ -2628,6 +2768,7 @@ GLSSharpNavierStokesSolver<dim>::solve()
       vertices_cell_mapping();
       generate_cut_cells_map();
     }
+
   this->set_initial_condition(
     this->simulation_parameters.initial_condition->type,
     this->simulation_parameters.restart_parameters.restart);
