@@ -44,6 +44,7 @@ Contents
    :maxdepth: 2
 
    installation
+   parameters/parameters
    examples/examples
    contributing
 
