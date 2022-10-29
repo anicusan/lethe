@@ -2,7 +2,7 @@
 Lethe
 #####
 
-.. image:: ../../logo/logo_black.png
+.. image:: ../../logo/logo_black2.png
   :alt: Lethe
   :align: center
 
@@ -43,14 +43,21 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   installation
+   installation/installation
+   structure
+   first_simulation
+   parameters/parameters
    examples/examples
+   theory/theory
+   tools/tools
+   publications
+   referencing
    contributing
 
 Installation
 ------------
 
-Follow the instructions in the :doc:`installation` section.
+Follow the instructions in the :doc:`installation/installation` section.
 
 Authors
 -------

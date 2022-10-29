@@ -1,0 +1,705 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Boundary Contitions - Multiphysics" href="boundary_conditions_multiphysics.html" /><link rel="prev" title="Multiphysics" href="multiphysics.html" />
+
+    <meta name="generator" content="sphinx-4.3.1, furo 2021.11.23"/>
+        <title>Multiphase Flow - Volume of Fluid - Lethe documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=0af69da206d614734f649b27d4cdc2dd6c31f41d" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Lethe  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+  <span class="sidebar-brand-text">Lethe  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../installation/installation.html">Installation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/regular_installation.html">Regular installation on Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/windows_wsl.html">Windows with WSL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/apple_arm.html">Installation on Apple ARM (M1 or M2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/docker.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/digital_alliance.html">Running Lethe on Digital Research Alliance of Canada clusters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../structure.html">Folder structure of Lethe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../first_simulation.html">Launching your first simulation</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../parameters.html">Parameters guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="cfd.html">General, CFD and Multiphysics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="simulation_control.html">Simulation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dimensionality.html">Dimensionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="physical_properties.html">Physical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="initial_conditions.html">Initial Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mesh.html">Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mesh_adaptation_control.html">Mesh Adaptation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fem.html">Finite element interpolation (FEM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary_conditions_cfd.html">Boundary conditions - CFD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source_term.html">Source term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="analytical_solution.html">Analytical solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="force_and_torque.html">Force and torque calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="post_processing.html">Post-Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timer.html">Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="non-linear_solver_control.html">Non-linear Solver Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linear_solver_control.html">Linear Solver Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stabilization.html">Stabilization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiphysics.html">Multiphysics</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Multiphase Flow - Volume of Fluid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boundary_conditions_multiphysics.html">Boundary Contitions - Multiphysics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nitsche.html">Nitsche Immersed Boundary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="restart.html">Restart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamic_flow_control.html">Dynamic flow control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="laser_heat_source.html">Laser heat source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="box_refinement.html">Box refinement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="velocity_source.html">Velocity Source</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../dem/dem.html">Discrete Element Method (DEM)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../dem/simulation_control.html">Simulation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dem/timer.html">Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dem/test.html">Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dem/model_parameters.html">Model Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dem/lagrangian_physical_properties.html">Lagrangian Physical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dem/insertion_info.html">Insertion Info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dem/floating_wall.html">Floating Wall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dem/floating_mesh.html">Floating Mesh (Solid Objects)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dem/mesh.html">Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dem/boundary_conditions.html">Boundary Conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../unresolved-cfd-dem/unresolved-cfd-dem.html">Unresolved CFD-DEM</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../unresolved-cfd-dem/void-fraction.html">Void Fraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unresolved-cfd-dem/cfd-dem.html">CFD-DEM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../resolved-cfd-dem/resolved-cfd-dem.html">Resolved CFD-DEM</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../rpt/rpt.html">Radioactive Particle Tracking (RPT)</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../rpt/rpt_parameters.html">RPT parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rpt/detector_parameters.html">Detector parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rpt/parameter_tuning.html">Parameter tuning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rpt/fem_reconstruction.html">FEM Reconstruction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/incompressible-flow/incompressible-flow.html">Incompressible Flow</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-lid%E2%80%90driven-cavity-flow/lid%E2%80%90driven-cavity-flow.html">1. 2D Lid-driven cavity flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-flow-around-cylinder/2d-flow-around-cylinder.html">2. 2D Flow around a cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-taylor-couette-flow/2d-taylor-couette-flow.html">3. 2D Taylor-Couette flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-backward-facing-step/2d-backward-facing-step.html">4. 2D Flow past a backward-facing step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-transient-around-ahmed-body/2d-transient-around-ahmed-body.html">5. 2D Transient flow around an Ahmed body</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-transient-flow-around-cylinder/2d-transient-flow-around-cylinder.html">6. 2D Transient flow around a cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/3d-flow-around-sphere/flow-around-sphere.html">7. 3D Flow around a sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/3d-flow-over-periodic-hills/3d-flow-over-periodic-hills.html">8. 3D Flow over periodic hills</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-taylor-couette-flow-nitsche/2d-taylor-couette-flow-nitsche.html">9. 2D Taylor-Couette flow using Nitsche immersed boundary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/3d-mixer-using-single-rotating-frame/3d-mixer-using-single-rotating-frame.html">10. 3D Ribbon mixer using a single rotating reference frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/3d-nitsche-mixer-with-pbt-impeller/nitsche-mixer-with-pbt-impeller.html">11. 3D Mixer with pitched-blade turbine impeller using Nitsche immersed boundary</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/multiphysics/multiphysics.html">Multiphysics Examples</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../examples/multiphysics/vof.html">1. VOF</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/dam-break/dam-break.html">1.1. Dam-break</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/rayleigh-taylor-instability/rayleigh-taylor-instability.html">1.2. Rayleigh-Taylor instability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/rising-bubble/rising-bubble.html">1.3. Rising bubble</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../examples/multiphysics/heat-transfer.html">2. Heat transfer</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/rayleigh-benard-convection/rayleigh-benard-convection.html">2.1. Rayleigh-Bénard Convection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/stefan-problem/stefan-problem.html">2.2. Stefan problem : melting of a solid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/warming-up-a-viscous-fluid/warming-up-a-viscous-fluid.html">2.3. Warming Up a Viscous Fluid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/melting-cavity/melting-cavity.html">2.4. Melting Cavity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/laser-heating/laser-heating.html">2.5. Laser heating</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/laser-meltpool/laser-meltpool.html">2.6. Laser meltpool</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../examples/multiphysics/tracer.html">3. Tracer</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/tracer-through-cad-junction/tracer-through-cad-junction.html">3.1. Tracer through CAD Junction in Simplex</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/dem/dem.html">Discrete Element Method</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/packing-in-circle/packing-in-circle.html">1. Packing in circle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/packing-in-ball/packing-in-ball.html">2. Packing in ball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/rotating-drum/rotating-drum.html">3. Rotating drum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/rotating-drum-with-post-processing/rotating-drum-with-post-processing.html">4. Rotating drum with post-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/rotation-of-box/rotation-of-box.html">5. Rotation of box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/silo/silo.html">6. Silo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/rectangular-hopper/rectangular-hopper.html">7. Rectangular hopper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/3d-small-scale-rotating-drum/3d-small-scale-rotating-drum.html">8. Small scale rotating drum (3D)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/granular-mixer/granular-mixer.html">9. Granular mixer</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/unresolved-cfd-dem/unresolved-cfd-dem.html">Unresolved CFD-DEM</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/unresolved-cfd-dem/cylindrical-packed-bed/cylindrical-packed-bed.html">1. Cylindrical packed bed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/unresolved-cfd-dem/square-fluidized-bed/square-fluidized-bed.html">2. Gas-solid fluidized bed</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/resolved-cfd-dem/resolved-cfd-dem.html">Resolved CFD-DEM Examples</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/resolved-cfd-dem/cylinder-with-sharp-interface/cylinder-with-sharp-interface.html">1. Flow around a cylinder using the sharp interface method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/resolved-cfd-dem/sedimentation-1-particle/sedimentation-1-particle.html">2. Sedimentation of one particle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/resolved-cfd-dem/sphere-carreau-with-sharp-interface/sphere-carreau-with-sharp-interface.html">3. Non-Newtonian flow past a sphere</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/rpt/rpt.html">Radioactive Particle Tracking (RPT)</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/rpt/photon-count-calculation-in-a-cylindrical-vessel/photon-count-calculation-in-a-cylindrical-vessel.html">1. Photon count calculation in a cylindrical vessel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/rpt/tuning-parameters-with-nomad/tuning-parameters-with-nomad.html">2. Tuning Count Calculation Model Parameters with NOMAD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../theory/theory.html">Theory</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../theory/fluid_dynamics/fluid_dynamics.html">Fluid dynamics</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../theory/fluid_dynamics/navier-stokes.html">The Incompressible Navier-Stokes equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../theory/fluid_dynamics/fem_formulation.html">Origin of the finite element formulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../theory/fluid_dynamics/stabilization.html">On the need for stabilization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../theory/fluid_dynamics/linear_solvers.html">Linear solvers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../theory/fluid_dynamics/rheology.html">Rheology and non-Newtonian fluids</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/dem/dem.html">Discret Element Method (DEM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../theory/unresolved_cfd-dem/unresolved_cfd-dem.html">Unresolved CFD-DEM coupling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../tools/tools.html">Tools</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tools/gmsh/gmsh.html">Introduction on how to use GMSH</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../referencing.html">Referencing Lethe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="multiphase-flow-volume-of-fluid">
+<h1>Multiphase Flow - Volume of Fluid<a class="headerlink" href="#multiphase-flow-volume-of-fluid" title="Permalink to this headline">¶</a></h1>
+<p>In this subsection, the parameters for multiphase flow simulation using the volume of fluid method (VOF) are specified.</p>
+<p>In this method, the two fluids considered are given index of <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> respectively. The amount of fluid at any given quadrature point is represented by a phase fraction between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. The interface is therefore considered located where the phase fraction <span class="math notranslate nohighlight">\(= 0.5\)</span>. The interface between the two fluids is moved by a transport equation on the phase fraction.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At the moment, a maximum of two fluids is supported. By convention, air is usually the <code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">0</span></code> and the other fluid of interest is the <code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">1</span></code>.</p>
+</div>
+<p>The default values of the VOF parameters are given in the text box below.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>subsection VOF
+        set viscous dissipative fluid = fluid 1
+        set diffusivity = 0
+
+        subsection interface sharpening
+                set enable      = false
+                set frequency   = 10
+                set interface sharpness    = 2
+
+                set type        = constant
+
+                # parameter for constant sharpening
+                set threshold   = 0.5
+
+                # parameters for adaptative sharpening
+                set threshold max deviation = 0.20
+                set max iterations = 20
+
+                set verbosity   = quiet
+        end
+
+        subsection peeling wetting
+                set enable      = false
+                set verbosity   = quiet
+        end
+
+        subsection mass conservation
+                set conservative fluid  = both
+                set monitoring          = false
+                set monitored fluid     = fluid 1
+
+                # parameters used with adaptative sharpening
+                set tolerance           = 1e-6
+                set verbosity           = quiet
+        end
+
+        subsection surface tension force
+                set enable      = false
+                set verbosity   = quiet
+                set output auxiliary fields        = false
+                set surface tension coefficient    = 0.0
+                set phase fraction gradient filter = 0.5
+                set curvature filter               = 0.5
+
+                subsection marangoni effect
+                        set enable = false
+                        set surface tension gradient = 0.0
+                end
+        end
+
+end
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not forget to <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">VOF</span> <span class="pre">=</span> <span class="pre">true</span></code> in the <a class="reference internal" href="multiphysics.html"><span class="doc">Multiphysics</span></a> subsection of the <code class="docutils literal notranslate"><span class="pre">.prm</span></code>.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See <a class="reference internal" href="initial_conditions.html"><span class="doc">Initial Conditions</span></a> for the definition of the VOF initial conditions and <a class="reference external" href="https://lethe-cfd.github.io/lethe/parameters/cfd/physical_properties.html#two-phase-simulations">Physical properties - two phase simulations</a> for the definition of the physical properties of both fluids.</p>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">viscous</span> <span class="pre">dissipative</span> <span class="pre">fluid</span></code>: defines fluid(s) to which viscous dissipation is applied.</p>
+<p>Choices are: <code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">1</span></code> (default) or <code class="docutils literal notranslate"><span class="pre">both</span></code>, with the fluids defined in the <a class="reference internal" href="physical_properties.html"><span class="doc">Physical Properties</span></a> for two phase simulations.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This parameter is used only if <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">heat</span> <span class="pre">transfer</span> <span class="pre">=</span> <span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">viscous</span> <span class="pre">dissipation</span> <span class="pre">=</span> <span class="pre">true</span></code> in <a class="reference internal" href="multiphysics.html"><span class="doc">Multiphysics</span></a>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Applying viscous dissipation in one of the fluids instead of both is particularly useful when one of the fluids is air. For numerical stability, the <code class="docutils literal notranslate"><span class="pre">kinematic</span> <span class="pre">viscosity</span></code> of the air is usually increased. However, but we do not want to have viscous dissipation in the air, because it would result in an unrealistic increase in its temperature.</p>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">diffusivity</span></code>: value of the diffusivity (diffusion coefficient) in the transport equation of the phase fraction. Default value is <code class="docutils literal notranslate"><span class="pre">0</span></code> to have pure advection. Increase <code class="docutils literal notranslate"><span class="pre">diffusivity</span></code> to <a class="reference internal" href="#improve-wetting"><span class="std std-ref">Improving the Wetting mechanism</span></a>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">interface</span> <span class="pre">sharpening</span></code>: defines parameters to counter numerical diffusion of the VOF method and to avoid the interface between the two fluids becoming more and more blurry after each time step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable</span></code>: controls if interface sharpening is enabled.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">frequency</span></code>: sets the frequency (in number of iterations) for the interface sharpening computation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">interface</span> <span class="pre">sharpness</span></code>: sharpness of the moving interface (parameter <span class="math notranslate nohighlight">\(a\)</span> in the <a class="reference external" href="https://www.researchgate.net/publication/287118331_Development_of_efficient_interface_sharpening_procedure_for_viscous_incompressible_flows">interface sharpening model</a>).</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This parameter must be larger than 1 for interface sharpening. Choosing values less than 1 leads to interface smoothing instead of sharpening. A good value would be between 1 and 2.</p>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: defines the interface sharpening type, either <code class="docutils literal notranslate"><span class="pre">constant</span></code> or <code class="docutils literal notranslate"><span class="pre">adaptative</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">constant</span></code>: the sharpening <code class="docutils literal notranslate"><span class="pre">threshold</span></code> is the same throughout the simulation. This <code class="docutils literal notranslate"><span class="pre">threshold</span></code>, between <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> (<code class="docutils literal notranslate"><span class="pre">0.5</span></code> by default), corresponds to the phase fraction at which the interphase is considered located.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">adaptative</span></code>: the sharpening threshold is searched in the range <span class="math notranslate nohighlight">\(\left[0.5-c_\text{dev} \; ; 0.5+c_\text{dev}\right]\)</span>, with <span class="math notranslate nohighlight">\(c_\text{dev}\)</span> the <code class="docutils literal notranslate"><span class="pre">threshold</span> <span class="pre">max</span> <span class="pre">deviation</span></code> (<code class="docutils literal notranslate"><span class="pre">0.2</span></code> by default), to ensure mass conservation. The search algorithm will stop either if the mass conservation <code class="docutils literal notranslate"><span class="pre">tolerance</span></code> is reached (see <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">mass</span> <span class="pre">conservation</span></code>), or if the number of search steps reach the number of <code class="docutils literal notranslate"><span class="pre">max</span> <span class="pre">iterations</span></code>. If the <code class="docutils literal notranslate"><span class="pre">tolerance</span></code> is not reached, a warning message will be printed.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In case of adaptative interface sharpening (<code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">adaptative</span></code>), mass conservation must be monitored (<code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">monitoring</span> <span class="pre">=</span> <span class="pre">true</span></code> in <code class="docutils literal notranslate"><span class="pre">mass</span> <span class="pre">conservation</span></code> subsection).</p>
+</div>
+<div class="admonition-example-of-a-warning-message-if-sharpening-is-adaptative-but-the-mass-conservation-tolerance-is-not-reached admonition">
+<p class="admonition-title">Example of a warning message if sharpening is adaptative but the mass conservation tolerance is not reached:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>WARNING: Maximum number of iterations (5) reached in the
+adaptative sharpening threshold algorithm, remaining error
+on mass conservation is: 0.02
+Consider increasing the sharpening threshold range or the
+number of iterations to reach the mass conservation tolerance.
+</pre></div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Usually the first iterations with sharpening are the most at risk to reach the <code class="docutils literal notranslate"><span class="pre">max</span> <span class="pre">iterations</span></code> without the <code class="docutils literal notranslate"><span class="pre">tolerance</span></code> being met, particularly if the mesh is quite coarse.</p>
+<p>As most of the other iterations converge in only one step (corresponding to a final threshold of <span class="math notranslate nohighlight">\(0.5\)</span>), increasing the sharpening search range through a higher <code class="docutils literal notranslate"><span class="pre">threshold</span> <span class="pre">max</span> <span class="pre">deviation</span></code> will relax the condition on the first iterations with a limited impact on the computational cost.</p>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbosity</span></code>: enables the display of the residual at each non-linear iteration, to monitor the progress of the linear iterations, similarly to the <code class="docutils literal notranslate"><span class="pre">verbosity</span></code> option in <a class="reference internal" href="linear_solver_control.html"><span class="doc">Linear Solver Control</span></a>. Choices are: <code class="docutils literal notranslate"><span class="pre">quiet</span></code> (default, no output), <code class="docutils literal notranslate"><span class="pre">verbose</span></code> (indicates sharpening steps) and <code class="docutils literal notranslate"><span class="pre">extra</span> <span class="pre">verbose</span></code> (details of the linear iterations).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">adaptive</span></code> sharpening algorithm calls for the sharpening method multiple times to test different values of sharpening threshold. It is therefore advised to avoid using <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">verbosity</span> <span class="pre">=</span> <span class="pre">extra</span> <span class="pre">verbose</span></code> in the <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">interface</span> <span class="pre">sharpening</span></code>.</p>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>The <a class="reference internal" href="../../examples/multiphysics/dam-break/dam-break.html"><span class="doc">Dam-break</span></a> example using VOF represents well the interface sharpening issue.</p>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">peeling</span> <span class="pre">wetting</span></code>: Peeling and wetting mechanisms are very important to consider when there are solid boundaries in the domain, like a wall. If the fluid is already on the wall and its velocity drives it away from it, the fluid should be able to detach from the wall, meaning to <cite>peel</cite> from it. If the fluid is not already on the wall and its velocity drives it toward it, the fluid should be able to attach to the wall, meaning to <cite>wet</cite> it. This subsection defines the parameters for peeling and wetting mechanisms at the VOF boundaries, as defined in <a class="reference internal" href="boundary_conditions_multiphysics.html"><span class="doc">Boundary Contitions - Multiphysics</span></a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This peeling/wetting mechanism implementation is an heuristic. It has been developed to meet the need of specific projects and gave satisfactory results as is, but it has not been broadly tested nor demonstrated, so its results should be considered with cautions. Do not hesitate to write to the team through the <a class="reference external" href="https://github.com/lethe-cfd/lethe">Lethe github page</a> would you need assistance.</p>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable</span></code>: controls if peeling/wetting mechanism is enabled.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbosity</span></code>: enables the display of the number of peeled and wet cells at each time-step. Choices are: <code class="docutils literal notranslate"><span class="pre">quiet</span></code> (default, no output) and <code class="docutils literal notranslate"><span class="pre">verbose</span></code>.</p>
+<div class="admonition-example-of-a-set-verbosity-verbose-output admonition">
+<p class="admonition-title">Example of a <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">verbosity</span> <span class="pre">=</span> <span class="pre">verbose</span></code> output:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Peeling/wetting correction at step 2
+  -number of wet cells: 24
+  -number of peeled cells: 1
+</pre></div>
+</div>
+</div>
+</li>
+<li><p>Peeling occurs in a cell where the following conditions are met:</p>
+<ul class="simple">
+<li><p>the cell is in the domain of the higher density fluid,</p></li>
+<li><p>the cell pressure value is below the average pressure of the <code class="docutils literal notranslate"><span class="pre">monitored</span> <span class="pre">fluid</span></code> (<code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">1</span></code> by default, see <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">mass</span> <span class="pre">conservation</span></code>), and</p></li>
+<li><p>the pressure gradient is negative for more than half of the quadrature points.</p></li>
+</ul>
+<p>The cell is then filled with the lower density fluid by changing its phase value progressively.</p>
+</li>
+<li><p>Wetting occurs in a cell where those conditions are met:</p>
+<ul class="simple">
+<li><p>the cell is in the domain of the lower density fluid,</p></li>
+<li><p>the cell pressure value is above the average pressure of the <code class="docutils literal notranslate"><span class="pre">monitored</span> <span class="pre">fluid</span></code> (<code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">1</span></code> by default, see <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">mass</span> <span class="pre">conservation</span></code>), and</p></li>
+<li><p>the pressure gradient is positive for more than half of the quadrature points.</p></li>
+</ul>
+<p>The cell is then filled with the higher density fluid by changing its phase value.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Even if <code class="docutils literal notranslate"><span class="pre">monitoring</span></code> is not enabled, the <code class="docutils literal notranslate"><span class="pre">monitored</span> <span class="pre">fluid</span></code> (<code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">1</span></code> by default) will be considered as the fluid of interest for the average pressure calculation in the peeling/wetting mechanism.</p>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As peeling/wetting mechanisms result in fluid generation and loss, is it highly advised to monitor the mass conservation of the fluid of interest (<code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">mass</span> <span class="pre">conservation</span></code>) and to change the type of sharpening threshold to adaptative (<code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">sharpening</span></code>).</p>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">mass</span> <span class="pre">conservation</span></code>: By default, mass conservation (continuity) equations are solved on the whole domain, i.e. on both fluids (<code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">conservative</span> <span class="pre">fluid</span> <span class="pre">=</span> <span class="pre">both</span></code>). However, replacing the mass conservation by a zero-pressure condition on one of the fluid (typically, the air), so that it can get in and out of the domain, can be useful to <a class="reference internal" href="#improve-wetting"><span class="std std-ref">Improving the Wetting mechanism</span></a>. This subsection defines parameters that can be used to solve mass conservation in one fluid instead of both, and to monitor the surface/volume (2D/3D) occupied by the other fluid of interest.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">conservative</span> <span class="pre">fluid</span></code>: defines fluid(s) to which conservation is solved.</p>
+<p>Choices are: <code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">both</span></code> (default), with the fluids defined in the <a class="reference internal" href="physical_properties.html"><span class="doc">Physical Properties</span></a> for two phase simulations.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">monitoring</span></code>: controls if conservation is monitored at each iteration, through the volume computation of the fluid given as <code class="docutils literal notranslate"><span class="pre">monitored</span> <span class="pre">fluid</span></code> (<code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">fluid</span> <span class="pre">1</span></code> (default)). Results are outputted in a data table (<cite>VOF_monitoring_fluid_0.dat</cite> or <cite>VOF_monitoring_fluid_1.dat</cite>).</p>
+<div class="admonition-example-of-file-output-vof-monitoring-fluid-1-dat admonition">
+<p class="admonition-title">Example of file output, <cite>VOF_monitoring_fluid_1.dat</cite>:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">volume_fluid_1</span></code> column gives the surface/volume (2D/3D) occupied by the fluid with index 1, its total mass, and the sharpening threshold used for this iteration.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> time  volume_fluid_1 mass_fluid_1 sharpening_threshold
+0.0000     4.9067e-01   3.8125e+02               0.5000
+0.0050     4.9297e-01   3.8304e+02               0.5000
+0.0100     4.9150e-01   3.8189e+02               0.5000
+0.0150     4.9001e-01   3.8074e+02               0.5000
+0.0200     4.8844e-01   3.7952e+02               0.5000
+0.0250     4.9762e-01   3.8665e+02               0.5000
+0.0300     4.9588e-01   3.8530e+02               0.5000
+0.0350     4.9437e-01   3.8413e+02               0.5000
+0.0400     4.9294e-01   3.8302e+02               0.5000
+0.0450     4.9144e-01   3.8185e+02               0.5000
+0.0500     5.0639e-01   3.9346e+02               0.5000
+</pre></div>
+</div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tolerance</span></code>: value for the tolerance on the mass conservation of the monitored fluid, used with adaptative sharpening (see the <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">sharpening</span></code>).</p>
+<p>For instance, with <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">tolerance</span> <span class="pre">=</span> <span class="pre">0.02</span></code> the sharpening threshold will be adapted so that the mass of the <code class="docutils literal notranslate"><span class="pre">monitored</span> <span class="pre">fluid</span></code> varies less than <span class="math notranslate nohighlight">\(\pm 2\%\)</span> from the initial mass (at <span class="math notranslate nohighlight">\(t = 0.0\)</span> sec).</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbosity</span></code>: states whether from the mass conservation data should be printed. Choices are quiet (no output), verbose (output information from the <code class="docutils literal notranslate"><span class="pre">adaptive</span></code> sharpening threshold) and extra verbose (output of the monitoring table in the terminal at the end of the simulation).</p>
+<div class="admonition-example-of-mass-conservation-verbosity-output-verbose-or-extra-verbose admonition">
+<p class="admonition-title">Example of mass conservation verbosity output (<code class="docutils literal notranslate"><span class="pre">verbose</span></code> or <code class="docutils literal notranslate"><span class="pre">extra</span> <span class="pre">verbose</span></code>):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Sharpening interface at step 2
+   Adapting the sharpening threshold
+   ... step 1 of the search algorithm, min, avg, max mass deviation is : -0.1 -0.05 0.05
+   ... step 1 of the search algorithm, min, avg, max mass deviation is : -0.05 -0.025 0.04
+   ... search algorithm took : 2 step(s)
+   ... error on mass conservation reached: -0.03
+   ... final sharpening is : 0.458224
+</pre></div>
+</div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">surface</span> <span class="pre">tension</span> <span class="pre">force</span></code>: Surface tension is the tendency of a liquid to maintain the minimum possible surface area. This subsection defines parameters to ensure an accurate interface between the two phases, used when at least one phase is liquid.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable</span></code>: controls if <code class="docutils literal notranslate"><span class="pre">surface</span> <span class="pre">tension</span> <span class="pre">force</span></code> is considered.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbosity</span></code>: enables the display of the output from the surface tension force calculations. Choices are: <code class="docutils literal notranslate"><span class="pre">quiet</span></code> (default, no output) and <code class="docutils literal notranslate"><span class="pre">verbose</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">auxiliary</span> <span class="pre">fields</span></code>: enables the display of the filtered <code class="docutils literal notranslate"><span class="pre">phase</span> <span class="pre">fraction</span> <span class="pre">gradient</span></code> and filtered <code class="docutils literal notranslate"><span class="pre">curvature</span></code>. Used for debugging purposes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">surface</span> <span class="pre">tension</span> <span class="pre">coefficient</span></code>: surface tension coefficient in <span class="math notranslate nohighlight">\(Nm^{-1}\)</span>, as used to define the Weber number (<span class="math notranslate nohighlight">\(We\)</span>):</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[We = Re \cdot \frac{\mu_\text{ref} \; u_\text{ref}}{\sigma}\]</div></div>
+<p>where <span class="math notranslate nohighlight">\(Re\)</span> is the Reynolds number, <span class="math notranslate nohighlight">\(\mu_\text{ref}\)</span> and <span class="math notranslate nohighlight">\(u_\text{ref}\)</span> are some reference viscosity and velocity characterizing the flow problem, and <span class="math notranslate nohighlight">\(\sigma\)</span> is the surface tension coefficient.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">phase</span> <span class="pre">fraction</span> <span class="pre">gradient</span> <span class="pre">filter</span></code>: value used to apply a <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.1002/fld.2643">projection step</a> to damp high frequency errors, that are magnified by differentiation, in the phase fraction gradient (<span class="math notranslate nohighlight">\(\bf{\psi}\)</span>), following the equation:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\int_\Omega \left( {\bf{v}} \cdot {\bf{\psi}} + \eta_n \nabla {\bf{v}} \cdot \nabla {\bf{\psi}} \right) d\Omega = \int_\Omega \left( {\bf{v}} \cdot \nabla {\phi} \right) d\Omega\]</div></div>
+<p>where <span class="math notranslate nohighlight">\(\bf{v}\)</span> is a piecewise continuous vector-valued test function, <span class="math notranslate nohighlight">\(\bf{\psi}\)</span> is the filtered phase fraction gradient, <span class="math notranslate nohighlight">\(\eta_n \geq 0\)</span> is the <code class="docutils literal notranslate"><span class="pre">phase</span> <span class="pre">fraction</span> <span class="pre">gradient</span> <span class="pre">filter</span></code> value, and <span class="math notranslate nohighlight">\(\phi\)</span> is the phase fraction.</p>
+</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">phase</span> <span class="pre">fraction</span> <span class="pre">gradient</span> <span class="pre">filter</span></code> must be a small value larger than 0. Use the procedure suggested in: <a class="reference internal" href="#choosing-values-for-the-surface-tension-force-filters"><span class="std std-ref">Choosing values for the surface tension force filters</span></a>.</p>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">curvature</span> <span class="pre">filter</span></code>: value used to apply a <a class="reference external" href="https://onlinelibrary.wiley.com/doi/full/10.1002/fld.2643">projection step</a> to damp high frequency errors, that are magnified by differentiation, in the curvature (<span class="math notranslate nohighlight">\(k\)</span>), following the equation:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\int_\Omega \left( v k + \eta_k \nabla v \cdot \nabla k \right) d\Omega = \int_\Omega \left( \nabla v \cdot \frac{\bf{\psi}}{|\bf{\psi}|} \right) d\Omega\]</div></div>
+<p>where <span class="math notranslate nohighlight">\(v\)</span> is a test function, <span class="math notranslate nohighlight">\(k\)</span> is the filtered curvature, <span class="math notranslate nohighlight">\(\eta_k\)</span> is the <code class="docutils literal notranslate"><span class="pre">curvature</span> <span class="pre">filter</span></code> value, and <span class="math notranslate nohighlight">\(\bf{\psi}\)</span> is the filtered phase fraction gradient.</p>
+</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use the procedure suggested in: <a class="reference internal" href="#choosing-values-for-the-surface-tension-force-filters"><span class="std std-ref">Choosing values for the surface tension force filters</span></a>.</p>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">marangoni</span> <span class="pre">effect</span></code>: Marangoni effect is a thermocapillary effect, considered in simulations if <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">enable</span> <span class="pre">=</span> <span class="pre">true</span></code> and if the <code class="docutils literal notranslate"><span class="pre">surface</span> <span class="pre">tension</span> <span class="pre">gradient</span></code> is not zero <span class="math notranslate nohighlight">\(\left(\frac{\partial \sigma}{\partial T} \neq 0\right)\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>The surface tension force is used in the <a class="reference internal" href="../../examples/multiphysics/rising-bubble/rising-bubble.html"><span class="doc">Rising bubble</span></a> example.</p>
+</div>
+<section id="improving-the-wetting-mechanism">
+<span id="improve-wetting"></span><h2>Improving the Wetting mechanism<a class="headerlink" href="#improving-the-wetting-mechanism" title="Permalink to this headline">¶</a></h2>
+<p>In the framework of incompressible fluids, a layer of the lowest density fluid (e.g. air) can form between the highest density fluid (e.g. water) and the boundary, preventing its wetting. Two strategies can be used to improve the wetting mechanism:</p>
+<ol class="arabic simple">
+<li><p>Increase the <code class="docutils literal notranslate"><span class="pre">diffusivity</span></code> to the transport equation (e.g. <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">diffusivity</span> <span class="pre">=</span> <span class="pre">1e-2</span></code>), so that the higher density fluid spreads even more to the boundary location.</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It is strongly advised to sharpen the interface more often (e.g. <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">frequency</span> <span class="pre">=</span> <span class="pre">2</span></code> or even <code class="docutils literal notranslate"><span class="pre">1</span></code>) to limit interface blurriness due the added diffusivity. As peeling-wetting is handled after the transport equation is solved, but before interface sharpening, sharpening will not prevent the wetting from occuring.</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Remove the conservation condition on the lowest density fluid (e.g. <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">conservative</span> <span class="pre">fluid</span> <span class="pre">=</span> <span class="pre">fluid</span> <span class="pre">1</span></code>). The mass conservation equation in the cells of interest is replaced by a zero-pressure condition, to allow the fluid to get out of the domain.</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This can give more precise results as the interface remains sharp, but the time step (in <a class="reference internal" href="simulation_control.html"><span class="doc">Simulation Control</span></a>) must be low enough to prevent numerical instabilities.</p>
+</div>
+</section>
+<section id="choosing-values-for-the-surface-tension-force-filters">
+<span id="id2"></span><h2>Choosing values for the surface tension force filters<a class="headerlink" href="#choosing-values-for-the-surface-tension-force-filters" title="Permalink to this headline">¶</a></h2>
+<p>The following procedure is recommended to choose proper values for the <code class="docutils literal notranslate"><span class="pre">phase</span> <span class="pre">fraction</span> <span class="pre">gradient</span> <span class="pre">filter</span></code> and <code class="docutils literal notranslate"><span class="pre">curvature</span> <span class="pre">filter</span></code>:</p>
+<ol class="arabic simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">output</span> <span class="pre">auxiliary</span> <span class="pre">fields</span> <span class="pre">=</span> <span class="pre">true</span></code>.</p></li>
+<li><p>Choose a small value, still larger than <span class="math notranslate nohighlight">\(0\)</span>, for example <span class="math notranslate nohighlight">\(h/10\)</span> with <span class="math notranslate nohighlight">\(h\)</span> the smallest mesh size.</p></li>
+<li><p>Run the simulation and check whether the filtered phase fraction gradient field is smooth and without oscillation.</p></li>
+<li><p>If the filtered field (<code class="docutils literal notranslate"><span class="pre">phase</span> <span class="pre">fraction</span> <span class="pre">gradient</span></code> or <code class="docutils literal notranslate"><span class="pre">curvature</span></code>) shows oscillations, increase the value, for example <span class="math notranslate nohighlight">\(h/5\)</span>, and repeat this process until reaching a smooth filtered field without oscillations.</p></li>
+</ol>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="boundary_conditions_multiphysics.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Boundary Contitions - Multiphysics</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="multiphysics.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Multiphysics</div>
+                
+              </div>
+            </a>
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Lethe |
+          Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+          <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            | <a class="muted-link" href="../../_sources/parameters/cfd/volume_of_fluid.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Multiphase Flow - Volume of Fluid</a><ul>
+<li><a class="reference internal" href="#improving-the-wetting-mechanism">Improving the Wetting mechanism</a></li>
+<li><a class="reference internal" href="#choosing-values-for-the-surface-tension-force-filters">Choosing values for the surface tension force filters</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

@@ -1,0 +1,530 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Tools" href="../../tools/tools.html" /><link rel="prev" title="Discret Element Method (DEM)" href="../dem/dem.html" />
+
+    <meta name="generator" content="sphinx-4.3.1, furo 2021.11.23"/>
+        <title>Unresolved CFD-DEM coupling - Lethe documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=0af69da206d614734f649b27d4cdc2dd6c31f41d" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Lethe  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+  <span class="sidebar-brand-text">Lethe  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../installation/installation.html">Installation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/regular_installation.html">Regular installation on Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/windows_wsl.html">Windows with WSL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/apple_arm.html">Installation on Apple ARM (M1 or M2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/docker.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation/digital_alliance.html">Running Lethe on Digital Research Alliance of Canada clusters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../structure.html">Folder structure of Lethe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../first_simulation.html">Launching your first simulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../parameters/parameters.html">Parameters guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../parameters/cfd/cfd.html">General, CFD and Multiphysics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/simulation_control.html">Simulation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/dimensionality.html">Dimensionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/physical_properties.html">Physical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/initial_conditions.html">Initial Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/mesh.html">Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/mesh_adaptation_control.html">Mesh Adaptation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/fem.html">Finite element interpolation (FEM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/boundary_conditions_cfd.html">Boundary conditions - CFD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/source_term.html">Source term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/analytical_solution.html">Analytical solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/force_and_torque.html">Force and torque calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/post_processing.html">Post-Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/timer.html">Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/non-linear_solver_control.html">Non-linear Solver Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/linear_solver_control.html">Linear Solver Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/stabilization.html">Stabilization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/multiphysics.html">Multiphysics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/volume_of_fluid.html">Multiphase Flow - Volume of Fluid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/boundary_conditions_multiphysics.html">Boundary Contitions - Multiphysics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/nitsche.html">Nitsche Immersed Boundary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/restart.html">Restart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/dynamic_flow_control.html">Dynamic flow control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/laser_heat_source.html">Laser heat source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/box_refinement.html">Box refinement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/cfd/velocity_source.html">Velocity Source</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../parameters/dem/dem.html">Discrete Element Method (DEM)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/simulation_control.html">Simulation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/timer.html">Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/test.html">Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/model_parameters.html">Model Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/lagrangian_physical_properties.html">Lagrangian Physical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/insertion_info.html">Insertion Info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/floating_wall.html">Floating Wall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/floating_mesh.html">Floating Mesh (Solid Objects)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/mesh.html">Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/dem/boundary_conditions.html">Boundary Conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../parameters/unresolved-cfd-dem/unresolved-cfd-dem.html">Unresolved CFD-DEM</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/unresolved-cfd-dem/void-fraction.html">Void Fraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/unresolved-cfd-dem/cfd-dem.html">CFD-DEM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../parameters/resolved-cfd-dem/resolved-cfd-dem.html">Resolved CFD-DEM</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../parameters/rpt/rpt.html">Radioactive Particle Tracking (RPT)</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/rpt/rpt_parameters.html">RPT parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/rpt/detector_parameters.html">Detector parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/rpt/parameter_tuning.html">Parameter tuning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../parameters/rpt/fem_reconstruction.html">FEM Reconstruction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/incompressible-flow/incompressible-flow.html">Incompressible Flow</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-lid%E2%80%90driven-cavity-flow/lid%E2%80%90driven-cavity-flow.html">1. 2D Lid-driven cavity flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-flow-around-cylinder/2d-flow-around-cylinder.html">2. 2D Flow around a cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-taylor-couette-flow/2d-taylor-couette-flow.html">3. 2D Taylor-Couette flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-backward-facing-step/2d-backward-facing-step.html">4. 2D Flow past a backward-facing step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-transient-around-ahmed-body/2d-transient-around-ahmed-body.html">5. 2D Transient flow around an Ahmed body</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-transient-flow-around-cylinder/2d-transient-flow-around-cylinder.html">6. 2D Transient flow around a cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/3d-flow-around-sphere/flow-around-sphere.html">7. 3D Flow around a sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/3d-flow-over-periodic-hills/3d-flow-over-periodic-hills.html">8. 3D Flow over periodic hills</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/2d-taylor-couette-flow-nitsche/2d-taylor-couette-flow-nitsche.html">9. 2D Taylor-Couette flow using Nitsche immersed boundary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/3d-mixer-using-single-rotating-frame/3d-mixer-using-single-rotating-frame.html">10. 3D Ribbon mixer using a single rotating reference frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/incompressible-flow/3d-nitsche-mixer-with-pbt-impeller/nitsche-mixer-with-pbt-impeller.html">11. 3D Mixer with pitched-blade turbine impeller using Nitsche immersed boundary</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/multiphysics/multiphysics.html">Multiphysics Examples</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../examples/multiphysics/vof.html">1. VOF</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/dam-break/dam-break.html">1.1. Dam-break</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/rayleigh-taylor-instability/rayleigh-taylor-instability.html">1.2. Rayleigh-Taylor instability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/rising-bubble/rising-bubble.html">1.3. Rising bubble</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../examples/multiphysics/heat-transfer.html">2. Heat transfer</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/rayleigh-benard-convection/rayleigh-benard-convection.html">2.1. Rayleigh-Bénard Convection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/stefan-problem/stefan-problem.html">2.2. Stefan problem : melting of a solid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/warming-up-a-viscous-fluid/warming-up-a-viscous-fluid.html">2.3. Warming Up a Viscous Fluid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/melting-cavity/melting-cavity.html">2.4. Melting Cavity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/laser-heating/laser-heating.html">2.5. Laser heating</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/laser-meltpool/laser-meltpool.html">2.6. Laser meltpool</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../examples/multiphysics/tracer.html">3. Tracer</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../examples/multiphysics/tracer-through-cad-junction/tracer-through-cad-junction.html">3.1. Tracer through CAD Junction in Simplex</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/dem/dem.html">Discrete Element Method</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/packing-in-circle/packing-in-circle.html">1. Packing in circle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/packing-in-ball/packing-in-ball.html">2. Packing in ball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/rotating-drum/rotating-drum.html">3. Rotating drum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/rotating-drum-with-post-processing/rotating-drum-with-post-processing.html">4. Rotating drum with post-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/rotation-of-box/rotation-of-box.html">5. Rotation of box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/silo/silo.html">6. Silo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/rectangular-hopper/rectangular-hopper.html">7. Rectangular hopper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/3d-small-scale-rotating-drum/3d-small-scale-rotating-drum.html">8. Small scale rotating drum (3D)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dem/granular-mixer/granular-mixer.html">9. Granular mixer</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/unresolved-cfd-dem/unresolved-cfd-dem.html">Unresolved CFD-DEM</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/unresolved-cfd-dem/cylindrical-packed-bed/cylindrical-packed-bed.html">1. Cylindrical packed bed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/unresolved-cfd-dem/square-fluidized-bed/square-fluidized-bed.html">2. Gas-solid fluidized bed</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/resolved-cfd-dem/resolved-cfd-dem.html">Resolved CFD-DEM Examples</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/resolved-cfd-dem/cylinder-with-sharp-interface/cylinder-with-sharp-interface.html">1. Flow around a cylinder using the sharp interface method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/resolved-cfd-dem/sedimentation-1-particle/sedimentation-1-particle.html">2. Sedimentation of one particle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/resolved-cfd-dem/sphere-carreau-with-sharp-interface/sphere-carreau-with-sharp-interface.html">3. Non-Newtonian flow past a sphere</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/rpt/rpt.html">Radioactive Particle Tracking (RPT)</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/rpt/photon-count-calculation-in-a-cylindrical-vessel/photon-count-calculation-in-a-cylindrical-vessel.html">1. Photon count calculation in a cylindrical vessel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/rpt/tuning-parameters-with-nomad/tuning-parameters-with-nomad.html">2. Tuning Count Calculation Model Parameters with NOMAD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../theory.html">Theory</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../fluid_dynamics/fluid_dynamics.html">Fluid dynamics</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fluid_dynamics/navier-stokes.html">The Incompressible Navier-Stokes equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fluid_dynamics/fem_formulation.html">Origin of the finite element formulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fluid_dynamics/stabilization.html">On the need for stabilization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fluid_dynamics/linear_solvers.html">Linear solvers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fluid_dynamics/rheology.html">Rheology and non-Newtonian fluids</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../dem/dem.html">Discret Element Method (DEM)</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Unresolved CFD-DEM coupling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../tools/tools.html">Tools</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tools/gmsh/gmsh.html">Introduction on how to use GMSH</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../referencing.html">Referencing Lethe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="unresolved-cfd-dem-coupling">
+<h1>Unresolved CFD-DEM coupling<a class="headerlink" href="#unresolved-cfd-dem-coupling" title="Permalink to this headline">¶</a></h1>
+<p>Unresolved CFD-DEM is a technique with high potential for designing and analyzing multiphase flows involving particles and fluid. Some examples of these systems are fluidized beds, stirred-tanks, and flocculation processes. In this approach, we apply Newton’s second law of motion to each particle individually such that their movement is described at a micro-scale (as in DEM simulations). On the other hand, the fluid is represented at a meso-scale by a mesh of cells, to which we apply the Volume Average Navier-Stokes (VANS) equations.</p>
+<p>The micro-meso scale approach allows for particle-fluid simulations involving large numbers of particles with reasonable computational cost and highly detailed results (in both time and space). As a counterpart, the interchanged momentum between phases needs to be modeled, i.e., it is not obtained straightforwardly from the application of a no-slip boundary condition at the interface between the fluid and the particles. The following image represents the micro-meso scale approach applied in unresolved CFD-DEM simulations, where the rectangles represent mesh of the geometry and the gray spots represent the particles.</p>
+<img alt="Schematic represantion of micro-meso scale approach in unresolved CFD-DEM" class="align-center" id="geometry" src="../../_images/schematic_unresolve_cfd-dem.png"/>
+<p>In this guide, we summarize the theory behind Unresolved CFD-DEM. For further details, we refer the reader to the articles by Bérard, Patience &amp; Blais (2019) <a class="reference external" href="https://doi.org/10.1002/cjce.23686">[1]</a>, and Zhou et al. (2010) <a class="reference external" href="https://doi.org/10.1017/S002211201000306X">[2]</a>.</p>
+<section id="particles">
+<h2>Particles<a class="headerlink" href="#particles" title="Permalink to this headline">¶</a></h2>
+<p>Applying Newton’s second law on the particle <span class="math notranslate nohighlight">\(i\)</span> surrounded by fluid a <span class="math notranslate nohighlight">\(f\)</span>, we find:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\begin{split}m_i \frac{\mathrm{d}\mathbf{v}_i}{\mathrm{d}t} = \sum_{j}\mathbf{f}_{c,ij} + \sum_{j}\mathbf{f}_{nc,ij} + \mathbf{f}_{pf,i} + \mathbf{f}_{g,i} \\
+I_i \frac{\mathrm{d}\mathbf{\omega}_i}{\mathrm{d}t} = \sum_{j}\left ( \mathbf{M}_{c,ij} + \mathbf{M}_{r,ij} \right ) + \sum_{w}\left ( \mathbf{M}_{c,iw} + \mathbf{M}_{r,iw} \right )\end{split}\]</div></div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(m_i\)</span> is the mass of the particle;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{v}_i\)</span> is the velocity vector;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}_{c,ij}\)</span> are the contact forces between particles <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> (detailed in the DEM section of this guide);</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}_{nc,ij}\)</span> are the non-contact forces between particles <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>, such as lubrication forces <a class="reference external" href="https://doi.org/10.1002/aic.690400418">[3]</a> (<strong>not yet available on Lethe</strong>);</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}_{pf,i}\)</span> is the force exerted by the surrounding fluid over particle <span class="math notranslate nohighlight">\(i\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}_{g,i}\)</span> is the gravitational force;</p></li>
+<li><p><span class="math notranslate nohighlight">\(I_i\)</span> is the moment of inertia;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{\omega}_i\)</span> is the angular velocity;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{M}_{c,ij}\)</span> is the torque between particles <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{M}_{r,ij}\)</span> is the rolling friction between particles <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{M}_{c,iw}\)</span> is the torque between particle <span class="math notranslate nohighlight">\(i\)</span> and walls <span class="math notranslate nohighlight">\(w\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{M}_{c,iw}\)</span> is the rolling friction between particle <span class="math notranslate nohighlight">\(i\)</span> and walls <span class="math notranslate nohighlight">\(w\)</span>;</p></li>
+</ul>
+<p>Apart from <span class="math notranslate nohighlight">\(\mathbf{f}_{pf,i}\)</span>, all the other terms of the previous equations are detailed in the DEM section of this theory guide (see <a class="reference internal" href="../dem/dem.html"><span class="doc">Discret Element Method (DEM)</span></a>). The momentum transport between phases <span class="math notranslate nohighlight">\(\mathbf{f}_{pf,i}\)</span> can be written as:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\mathbf{f}_{pf,i} = \mathbf{f}_{\nabla p,i} + \mathbf{f}_{\nabla \cdot \mathbf{\tau},i} + \mathbf{f}_{d,i} + \mathbf{f}_{Ar,i} + \mathbf{f}_{g,i} + \mathbf{f}''_{i}\]</div></div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}_{\nabla p,i}\)</span> is the force due to the pressure gradient;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}_{\nabla \cdot \tau,i}\)</span> is the force due to the shear stress;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}_{d,i}\)</span> is the drag force;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}_{Ar,i}\)</span> is the buoyancy (Archimedes) force;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}_{g,i}\)</span> is the force due to gravity;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{f}''_{i}\)</span> are the remaining forces, including virtual mass, Basset, Lift, and Magnus (currently not implemented in Lethe).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since pressure in Lethe does not account for the hydrostatic pressure, i.e., the gravity term is not taken into account in the Navier-Stokes equations (see <a class="reference internal" href="../fluid_dynamics/navier-stokes.html"><span class="doc">The Incompressible Navier-Stokes equations</span></a>), we explicitly insert <span class="math notranslate nohighlight">\(\mathbf{f}_{Ar,i}\)</span> in <span class="math notranslate nohighlight">\(\mathbf{f}_{pf,i}\)</span>.</p>
+</div>
+<p>In unresolved CFD-DEM, the drag force is calculated using correlations (frequently called drag models). The drag models implemented in Lethe are described in the <a class="reference external" href="https://lethe-cfd.github.io/lethe/parameters/unresolved_cfd-dem/cfd_dem.html">unresolved CFD-DEM parameters guide</a>.</p>
+</section>
+<section id="volume-average-navier-stokes">
+<h2>Volume Average Navier-Stokes<a class="headerlink" href="#volume-average-navier-stokes" title="Permalink to this headline">¶</a></h2>
+<p>Since we represent the fluid at a meso-scale, the quantities calculated for the cells are averages among its volume. Additionally, as the volume of fluid is a fraction of the cell, the porosity (or void fraction) is taken into account. To do this, we apply the Volume Average Navier-Stokes (VANS) equations to represent the fluid phase. Mainly, the VANS equations are presented in two different formulations, so called Model A (or Set II) and Model B (or Set I) <a class="reference external" href="https://doi.org/10.1017/S002211201000306X">[2]</a>.</p>
+<p>Considering an incompressible flow, the continuity equation for both models is:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\frac{\partial \varepsilon_f}{\partial t} + \nabla \cdot \left ( \varepsilon_f \mathbf{u} \right ) = 0\]</div></div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{u}\)</span> is the the fluid velocity vector;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\varepsilon_f\)</span> is the void fraction.</p></li>
+</ul>
+<p>Models A and B differ from each other in the way the momentum equation is calculated. In Model A, we consider that the pressure and the viscous shear stress are in both phases, while for Model B both are only in the fluid <a class="reference external" href="https://doi.org/10.1017/S002211201000306X">[2]</a>:</p>
+<p>Model A:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\rho_f \left ( \frac{\partial \left ( \varepsilon_f \mathbf{u} \right )}{\partial t} + \nabla \cdot \left ( \varepsilon_f \mathbf{u} \otimes \mathbf{u} \right ) \right ) = -\varepsilon \nabla p + \varepsilon \nabla \cdot \tau - \mathbf{F}_{pf}^A\]</div></div>
+<p>Model B:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\rho_f \left ( \frac{\partial \left ( \varepsilon_f \mathbf{u} \right )}{\partial t} + \nabla \cdot \left ( \varepsilon_f \mathbf{u} \otimes \mathbf{u} \right ) \right ) = -\nabla p + \nabla \cdot \tau - \mathbf{F}_{pf}^B\]</div></div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\rho_f\)</span> is the density of the fluid;</p></li>
+<li><p><span class="math notranslate nohighlight">\(p\)</span> is the pressure;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\tau\)</span> is the shear stress;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{F}_{pf}^A\)</span> and <span class="math notranslate nohighlight">\(\mathbf{F}_{pf}^B\)</span> are the source terms representing the forces applied back in the fluid due to the interaction with particles for Models A and B, respectively.</p></li>
+</ul>
+<p>For Model A, since the pressure and shear stress terms are considered to be partially in the particle’s phase, we can write the interaction term as:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\mathbf{F}_{pf}^A = \frac{1}{V_{\Omega}}\sum_{i}^{n_p}\left ( \mathbf{f}_{pf, i} - \mathbf{f}_{\nabla p, i} - \mathbf{f}_{\nabla \cdot \tau, i} \right )\]</div></div>
+<p>while for Model B, since the pressure and shear stress are totally in the fluid, we write:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\mathbf{F}_{pf}^B = \frac{1}{V_{\Omega}}\sum_{i}^{n_p}\left ( \mathbf{f}_{pf, i} \right )\]</div></div>
+<p>where <span class="math notranslate nohighlight">\(n_p\)</span> is the number of particles inside the cell <span class="math notranslate nohighlight">\(\Omega\)</span> with volume <span class="math notranslate nohighlight">\(V_{\Omega}\)</span>.</p>
+<p>Lethe is capable of simulating unresolved CFD-DEM cases with both Models A and B (see the <a class="reference internal" href="../../parameters/unresolved-cfd-dem/cfd-dem.html"><span class="doc">CFD-DEM</span></a> page of this guide).</p>
+</section>
+<section id="void-fraction">
+<h2>Void fraction<a class="headerlink" href="#void-fraction" title="Permalink to this headline">¶</a></h2>
+<p>Determining the void fraction is an important step in unresolved CFD-DEM, as can be noted by the VANS equations and the drag models <a class="reference external" href="http://dx.doi.org/10.1016/j.ces.2013.05.036">[4]</a>. In Lethe we apply the Particle Centroid Method (PCM) <a class="reference external" href="https://doi.org/10.1002/aic.14421">[5]</a>, which is simple and the most popular method. It consists of tracking the position of the centroid of each particle and applying the total volume of the particle on the calculation of the void fraction of the cell. This means that in either of the following situations the void fraction of the colored cell is the same:</p>
+<img alt="../../_images/void_frac1.png" src="../../_images/void_frac1.png"/>
+<img alt="../../_images/void_frac2.png" src="../../_images/void_frac2.png"/>
+<p>PCM can be written as:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\varepsilon_f = 1 - \frac{\sum_{i}^{n_p} V_{p,i}}{V_\Omega}\]</div></div>
+<p>where <span class="math notranslate nohighlight">\(n_p\)</span> is the number of particles with centroid inside the cell <span class="math notranslate nohighlight">\(\Omega\)</span> with volume <span class="math notranslate nohighlight">\(V_{\Omega}\)</span>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The void fraction of a single cell must always be close to the actual porosity of the media, regardless of the method applied on its calculation. If the cells are too small, the void fraction will be excessively low in some cells and excessively high in others. This leads to miscalculation of quantities highly dependent of the void fraction, such as the drag force. According to the literature, <strong>cells should be at least 3 to 4 times larger than particles</strong>.</p>
+</div>
+<p>In the finite element method, the void fraction must be projected to the mesh nodes so that one can assemble the system of equations. This is done by <span class="math notranslate nohighlight">\(\mathcal{L}^2\)</span> projection <a class="reference external" href="https://link.springer.com/book/10.1007/978-3-642-33287-6">[6]</a>:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\min_{\varepsilon_f \in \mathbb{R}} \frac{1}{2} \sum_i \left (\sum_j \varepsilon_{f,j} \phi_j - \varepsilon_{f,i} \right )\]</div></div>
+<p>where <span class="math notranslate nohighlight">\(\varepsilon_{f,i}\)</span> is the void fraction calculated by PCM and <span class="math notranslate nohighlight">\(\varepsilon_{f,j}\)</span> the projected void fraction.</p>
+<p>Then, we assemble and solve the following:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\int_{\Omega} \varphi_i \varepsilon_{f,j} \varphi_j d \Omega = \int_{\Omega} \varepsilon_{f,i} \varphi_i d \Omega\]</div></div>
+<p>Lethe also has the option of smoothing the void fraction profile, which helps to mitigate sharp discontinuities. To do so, the left hand side of the previous equation is substituted by:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\iint_\Omega L^2 \nabla \phi_i \nabla \phi_j d\Omega\]</div></div>
+<p>Where <span class="math notranslate nohighlight">\(L\)</span> is the smoothing length, used as parameter in Lethe unresolved CFD-DEM simulations.</p>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://doi.org/10.1002/cjce.23686">[1]</a> Bérard, Patience, and Blais. Experimental methods in chemical engineering: Unresolved CFD‐DEM. The Canadian Journal of Chemical Engineering, v. 98, n. 2, p. 424-440, 2020.</p>
+<p><a class="reference external" href="https://doi.org/10.1017/S002211201000306X">[2]</a> Zhou, Kuang, Chu, and Yu, Discrete particle simulation of particle–fluid flow: model formulations and their applicability, Journal of Fluid Mechanics, vol. 661, pp. 482–510, 2010.</p>
+<p><a class="reference external" href="https://doi.org/10.1002/aic.690400418">[3]</a> Kim, Sangtae, and Karrila. Microhydrodynamics: principles and selected applications. Courier Corporation, 2013.</p>
+<p><a class="reference external" href="http://dx.doi.org/10.1016/j.ces.2013.05.036">[4]</a> L. Rong, K. Dong, A. Yu, Lattice-boltzmann simulation of fluid flow through packed beds of uniform spheres: Effect of porosity, Chemical engineering science 99 (2013) 44–58.</p>
+<p><a class="reference external" href="https://doi.org/10.1002/aic.14421">[5]</a> Z. Peng et al. Influence of void fraction calculation on fidelity of CFD‐DEM simulation of gas‐solid bubbling fluidized beds. AIChE Journal, v. 60, n. 6, p. 2000-2018, 2014.</p>
+<p><a class="reference external" href="https://link.springer.com/book/10.1007/978-3-642-33287-6">[6]</a> M. G. Larson, F. Bengzon. The finite element method: theory, implementation, and applications. Springer Science &amp; Business Media, 2013.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../../tools/tools.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Tools</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../dem/dem.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Discret Element Method (DEM)</div>
+                
+              </div>
+            </a>
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Lethe |
+          Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+          <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            | <a class="muted-link" href="../../_sources/theory/unresolved_cfd-dem/unresolved_cfd-dem.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Unresolved CFD-DEM coupling</a><ul>
+<li><a class="reference internal" href="#particles">Particles</a></li>
+<li><a class="reference internal" href="#volume-average-navier-stokes">Volume Average Navier-Stokes</a></li>
+<li><a class="reference internal" href="#void-fraction">Void fraction</a></li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

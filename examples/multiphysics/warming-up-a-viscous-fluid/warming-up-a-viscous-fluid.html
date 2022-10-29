@@ -3,12 +3,13 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="Contributing" href="../../../contributing.html" /><link rel="prev" title="Multiphysics Examples" href="../multiphysics.html" />
+<link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="2.4. Melting Cavity" href="../melting-cavity/melting-cavity.html" /><link rel="prev" title="2.2. Stefan problem : melting of a solid" href="../stefan-problem/stefan-problem.html" />
 
     <meta name="generator" content="sphinx-4.3.1, furo 2021.11.23"/>
-        <title>Warming Up a Viscous Fluid - Lethe documentation</title>
+        <title>2.3. Warming Up a Viscous Fluid - Lethe documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=0af69da206d614734f649b27d4cdc2dd6c31f41d" />
     
     
@@ -155,18 +156,159 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../../examples.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../incompressible-flow/incompressible-flow.html">Incompressible Flow</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/2d-lid%E2%80%90driven-cavity-flow/lid%E2%80%90driven-cavity-flow.html">2D Lid-Driven Cavity Flow</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../installation/installation.html">Installation</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation/regular_installation.html">Regular installation on Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation/windows_wsl.html">Windows with WSL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation/apple_arm.html">Installation on Apple ARM (M1 or M2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation/docker.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation/digital_alliance.html">Running Lethe on Digital Research Alliance of Canada clusters</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="../multiphysics.html">Multiphysics Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Warming Up a Viscous Fluid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../structure.html">Folder structure of Lethe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../first_simulation.html">Launching your first simulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../parameters/parameters.html">Parameters guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../parameters/cfd/cfd.html">General, CFD and Multiphysics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/simulation_control.html">Simulation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/dimensionality.html">Dimensionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/physical_properties.html">Physical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/initial_conditions.html">Initial Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/mesh.html">Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/mesh_adaptation_control.html">Mesh Adaptation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/fem.html">Finite element interpolation (FEM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/boundary_conditions_cfd.html">Boundary conditions - CFD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/source_term.html">Source term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/analytical_solution.html">Analytical solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/force_and_torque.html">Force and torque calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/post_processing.html">Post-Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/timer.html">Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/non-linear_solver_control.html">Non-linear Solver Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/linear_solver_control.html">Linear Solver Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/stabilization.html">Stabilization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/multiphysics.html">Multiphysics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/volume_of_fluid.html">Multiphase Flow - Volume of Fluid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/boundary_conditions_multiphysics.html">Boundary Contitions - Multiphysics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/nitsche.html">Nitsche Immersed Boundary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/restart.html">Restart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/dynamic_flow_control.html">Dynamic flow control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/laser_heat_source.html">Laser heat source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/box_refinement.html">Box refinement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/cfd/velocity_source.html">Velocity Source</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../parameters/dem/dem.html">Discrete Element Method (DEM)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/simulation_control.html">Simulation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/timer.html">Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/test.html">Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/model_parameters.html">Model Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/lagrangian_physical_properties.html">Lagrangian Physical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/insertion_info.html">Insertion Info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/floating_wall.html">Floating Wall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/floating_mesh.html">Floating Mesh (Solid Objects)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/mesh.html">Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/dem/boundary_conditions.html">Boundary Conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../parameters/unresolved-cfd-dem/unresolved-cfd-dem.html">Unresolved CFD-DEM</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/unresolved-cfd-dem/void-fraction.html">Void Fraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/unresolved-cfd-dem/cfd-dem.html">CFD-DEM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../parameters/resolved-cfd-dem/resolved-cfd-dem.html">Resolved CFD-DEM</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../parameters/rpt/rpt.html">Radioactive Particle Tracking (RPT)</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/rpt/rpt_parameters.html">RPT parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/rpt/detector_parameters.html">Detector parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/rpt/parameter_tuning.html">Parameter tuning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../parameters/rpt/fem_reconstruction.html">FEM Reconstruction</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../../examples.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../incompressible-flow/incompressible-flow.html">Incompressible Flow</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/2d-lid%E2%80%90driven-cavity-flow/lid%E2%80%90driven-cavity-flow.html">1. 2D Lid-driven cavity flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/2d-flow-around-cylinder/2d-flow-around-cylinder.html">2. 2D Flow around a cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/2d-taylor-couette-flow/2d-taylor-couette-flow.html">3. 2D Taylor-Couette flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/2d-backward-facing-step/2d-backward-facing-step.html">4. 2D Flow past a backward-facing step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/2d-transient-around-ahmed-body/2d-transient-around-ahmed-body.html">5. 2D Transient flow around an Ahmed body</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/2d-transient-flow-around-cylinder/2d-transient-flow-around-cylinder.html">6. 2D Transient flow around a cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/3d-flow-around-sphere/flow-around-sphere.html">7. 3D Flow around a sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/3d-flow-over-periodic-hills/3d-flow-over-periodic-hills.html">8. 3D Flow over periodic hills</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/2d-taylor-couette-flow-nitsche/2d-taylor-couette-flow-nitsche.html">9. 2D Taylor-Couette flow using Nitsche immersed boundary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/3d-mixer-using-single-rotating-frame/3d-mixer-using-single-rotating-frame.html">10. 3D Ribbon mixer using a single rotating reference frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../incompressible-flow/3d-nitsche-mixer-with-pbt-impeller/nitsche-mixer-with-pbt-impeller.html">11. 3D Mixer with pitched-blade turbine impeller using Nitsche immersed boundary</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../multiphysics.html">Multiphysics Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="../vof.html">1. VOF</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../dam-break/dam-break.html">1.1. Dam-break</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../rayleigh-taylor-instability/rayleigh-taylor-instability.html">1.2. Rayleigh-Taylor instability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../rising-bubble/rising-bubble.html">1.3. Rising bubble</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current has-children"><a class="reference internal" href="../heat-transfer.html">2. Heat transfer</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../rayleigh-benard-convection/rayleigh-benard-convection.html">2.1. Rayleigh-Bénard Convection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../stefan-problem/stefan-problem.html">2.2. Stefan problem : melting of a solid</a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">2.3. Warming Up a Viscous Fluid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../melting-cavity/melting-cavity.html">2.4. Melting Cavity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../laser-heating/laser-heating.html">2.5. Laser heating</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../laser-meltpool/laser-meltpool.html">2.6. Laser meltpool</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../tracer.html">3. Tracer</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tracer-through-cad-junction/tracer-through-cad-junction.html">3.1. Tracer through CAD Junction in Simplex</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../dem/dem.html">Discrete Element Method</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../dem/packing-in-circle/packing-in-circle.html">1. Packing in circle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dem/packing-in-ball/packing-in-ball.html">2. Packing in ball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dem/rotating-drum/rotating-drum.html">3. Rotating drum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dem/rotating-drum-with-post-processing/rotating-drum-with-post-processing.html">4. Rotating drum with post-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dem/rotation-of-box/rotation-of-box.html">5. Rotation of box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dem/silo/silo.html">6. Silo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dem/rectangular-hopper/rectangular-hopper.html">7. Rectangular hopper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dem/3d-small-scale-rotating-drum/3d-small-scale-rotating-drum.html">8. Small scale rotating drum (3D)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../dem/granular-mixer/granular-mixer.html">9. Granular mixer</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../unresolved-cfd-dem/unresolved-cfd-dem.html">Unresolved CFD-DEM</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../unresolved-cfd-dem/cylindrical-packed-bed/cylindrical-packed-bed.html">1. Cylindrical packed bed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../unresolved-cfd-dem/square-fluidized-bed/square-fluidized-bed.html">2. Gas-solid fluidized bed</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../resolved-cfd-dem/resolved-cfd-dem.html">Resolved CFD-DEM Examples</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../resolved-cfd-dem/cylinder-with-sharp-interface/cylinder-with-sharp-interface.html">1. Flow around a cylinder using the sharp interface method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../resolved-cfd-dem/sedimentation-1-particle/sedimentation-1-particle.html">2. Sedimentation of one particle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../resolved-cfd-dem/sphere-carreau-with-sharp-interface/sphere-carreau-with-sharp-interface.html">3. Non-Newtonian flow past a sphere</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../rpt/rpt.html">Radioactive Particle Tracking (RPT)</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../rpt/photon-count-calculation-in-a-cylindrical-vessel/photon-count-calculation-in-a-cylindrical-vessel.html">1. Photon count calculation in a cylindrical vessel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../rpt/tuning-parameters-with-nomad/tuning-parameters-with-nomad.html">2. Tuning Count Calculation Model Parameters with NOMAD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../theory/theory.html">Theory</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../theory/fluid_dynamics/fluid_dynamics.html">Fluid dynamics</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../theory/fluid_dynamics/navier-stokes.html">The Incompressible Navier-Stokes equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../theory/fluid_dynamics/fem_formulation.html">Origin of the finite element formulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../theory/fluid_dynamics/stabilization.html">On the need for stabilization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../theory/fluid_dynamics/linear_solvers.html">Linear solvers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../theory/fluid_dynamics/rheology.html">Rheology and non-Newtonian fluids</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../theory/dem/dem.html">Discret Element Method (DEM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../theory/unresolved_cfd-dem/unresolved_cfd-dem.html">Unresolved CFD-DEM coupling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../tools/tools.html">Tools</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tools/gmsh/gmsh.html">Introduction on how to use GMSH</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../referencing.html">Referencing Lethe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 
@@ -195,20 +337,40 @@
         </div>
         <article role="main">
           <section id="warming-up-a-viscous-fluid">
-<h1>Warming Up a Viscous Fluid<a class="headerlink" href="#warming-up-a-viscous-fluid" title="Permalink to this headline">¶</a></h1>
-<p>A viscous fluid lays between two parallel plates: one fixed and insulated, and the other moving and heated. The velocity profile and the temperature evolution are simulated. The parameter file used is <code class="docutils literal notranslate"><span class="pre">warming_up_viscous_fluid.prm</span></code>.</p>
+<h1><span class="section-number">2.3. </span>Warming Up a Viscous Fluid<a class="headerlink" href="#warming-up-a-viscous-fluid" title="Permalink to this headline">¶</a></h1>
+<p>This example introduces how to solve another physics along with the CFD solver.</p>
+<section id="features">
+<h2><span class="section-number">2.3.1. </span>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Solver: <code class="docutils literal notranslate"><span class="pre">gls_navier_stokes_2d</span></code></p></li>
+<li><p>Transient problem</p></li>
+<li><p>Multiphysics</p></li>
+<li><p>Displays the use of heat transfer physics</p></li>
+<li><p>Analytical solution</p></li>
+</ul>
+</section>
+<section id="files-used-in-this-example">
+<h2><span class="section-number">2.3.2. </span>Files used in this example<a class="headerlink" href="#files-used-in-this-example" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">examples/multiphysics/warming-up-viscous-fluid</span></code></p>
+</section>
+<section id="description-of-the-case">
+<h2><span class="section-number">2.3.3. </span>Description of the case<a class="headerlink" href="#description-of-the-case" title="Permalink to this headline">¶</a></h2>
+<p>A viscous fluid lays between two parallel plates: one fixed and insulated, and the other moving and heated. The velocity profile and the temperature evolution are simulated. The parameter file used is <code class="docutils literal notranslate"><span class="pre">warming-up-viscous-fluid.prm</span></code>.</p>
 <p>The following schematic describes the simulation.</p>
-<img alt="Simulation schematic" class="align-center" src="../../../_images/warming_scheme.png"/>
+<a class="reference internal image-reference" href="../../../_images/warming-scheme.png"><img alt="Simulation schematic" class="align-center" src="../../../_images/warming-scheme.png" style="height: 10cm;"/></a>
 <ul class="simple">
 <li><p>bc = 0 : no slip and thermal insulation boundary condition</p></li>
-<li><p>bc = 1 : flow in the y-direction (v=2) and heating at Tw</p></li>
+<li><p>bc = 1 : flow in the y-direction (<span class="math notranslate nohighlight">\(v=2\)</span>) and heating at Tw</p></li>
 </ul>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The whole simulation is carried out in the frame of one-way coupling: the fluid velocity influences the heat generated - through viscous dissipation -, but the heat transfer does not influence the fluid velocity. Moreover, fluid state changes are not considered.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The whole simulation is carried out in the frame of one-way coupling: the fluid velocity influences the heat generated through viscous dissipation, but the heat transfer does not influence the fluid velocity. Moreover, fluid state changes are not considered.</p>
 </div>
+</section>
 <section id="parameter-file">
-<h2>Parameter file<a class="headerlink" href="#parameter-file" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3.4. </span>Parameter file<a class="headerlink" href="#parameter-file" title="Permalink to this headline">¶</a></h2>
+<section id="simulation-control">
+<h3><span class="section-number">2.3.4.1. </span>Simulation control<a class="headerlink" href="#simulation-control" title="Permalink to this headline">¶</a></h3>
 <p>Time integration is defined by a 2nd order backward differentiation (<code class="docutils literal notranslate"><span class="pre">bdf2</span></code>), for a 7.0 seconds simulation (<code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">end</span></code>) with a 0.05 second <code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">step</span></code>, as stated in the subsection <code class="docutils literal notranslate"><span class="pre">simulation</span> <span class="pre">control</span></code>:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>#---------------------------------------------------
 # Simulation Control
@@ -224,8 +386,11 @@ end
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Heat transfer phenomenon occur at a much larger characteristic time than fluid transport phenomenon. To reach a stable state for the system, the end time much be quite big, but the time step can also be increased (in the limit of numerical convergence).</p>
+<p>Heat transfer phenomenon occur at a much larger characteristic time than fluid transport phenomenon. To reach a stable state for the system, the end time much be quite big, but the time step can also be increased (in the limit of numerical stability).</p>
 </div>
+</section>
+<section id="fem">
+<h3><span class="section-number">2.3.4.2. </span>FEM<a class="headerlink" href="#fem" title="Permalink to this headline">¶</a></h3>
 <p>The order of resolution for the <code class="docutils literal notranslate"><span class="pre">velocity</span></code>, <code class="docutils literal notranslate"><span class="pre">pressure</span></code> and <code class="docutils literal notranslate"><span class="pre">temperature</span></code> are given in the subsection FEM:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>#---------------------------------------------------
 # FEM
@@ -237,14 +402,19 @@ subsection FEM
 end
 </pre></div>
 </div>
+</section>
+<section id="physical-properties">
+<h3><span class="section-number">2.3.4.3. </span>Physical properties<a class="headerlink" href="#physical-properties" title="Permalink to this headline">¶</a></h3>
 <p>The fluid’s <code class="docutils literal notranslate"><span class="pre">physical</span> <span class="pre">properties</span></code> are defined in the following subsection, according to the properties of oil.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>#---------------------------------------------------
 # Physical Properties
 #---------------------------------------------------
 subsection physical properties
-  set density              = 0.9
-  set kinematic viscosity    = 0.5
-  set thermal conductivity = 0.12
+  subsection fluid 0
+    set density              = 0.9
+    set kinematic viscosity    = 0.5
+    set thermal conductivity = 0.12
+  end
 # water = 1 density, 0.01 viscosity, 0.59 conductivity
 # oil = 0.9 density, 0.5 viscosity, 0.12 conductivity
 end
@@ -254,7 +424,10 @@ end
 <p class="admonition-title">Warning</p>
 <p>If no physical properties are defined, default values (of 1.0) are taken for the simulation.</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">mesh</span></code> considered is a very basic rectangle, using the <code class="docutils literal notranslate"><span class="pre">dealii</span></code> grid type <code class="docutils literal notranslate"><span class="pre">hyper_rectangle</span></code>, represented the fluid volume considered between the two plates. Here, the width between the two plates is set to <code class="docutils literal notranslate"><span class="pre">0,5</span></code>.</p>
+</section>
+<section id="mesh">
+<h3><span class="section-number">2.3.4.4. </span>Mesh<a class="headerlink" href="#mesh" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">mesh</span></code> considered is a very basic rectangle, using the <code class="docutils literal notranslate"><span class="pre">dealii</span></code> grid type <a class="reference external" href="https://www.dealii.org/current/doxygen/deal.II/namespaceGridGenerator.html#a56019d263ae45708302d5d7599f0d458">hyper_rectangle</a>, to represent the fluid volume considered between the two plates. Here, the width between the two plates is set to <code class="docutils literal notranslate"><span class="pre">0.5</span></code>.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>#---------------------------------------------------
 # Mesh
 #---------------------------------------------------
@@ -268,8 +441,11 @@ end
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>As the fluid velocity is not influences by heat transfer (one-way coupling), the fluid velocity will remain constant for the whole simulation across the domain, and as heat transfer occurs at a larger scale, the mesh can be coarse.</p>
+<p>As the fluid velocity is not influenced by heat transfer (one-way coupling), the fluid velocity will remain constant for the whole simulation across the domain, and as heat transfer occurs at a larger scale, the mesh can be coarse.</p>
 </div>
+</section>
+<section id="multiphysics">
+<h3><span class="section-number">2.3.4.5. </span>Multiphysics<a class="headerlink" href="#multiphysics" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">multiphysics</span></code> subsection enable to turn on (<code class="docutils literal notranslate"><span class="pre">true</span></code>) and off (<code class="docutils literal notranslate"><span class="pre">false</span></code>) the physics of interest. Here <code class="docutils literal notranslate"><span class="pre">heat</span> <span class="pre">transfer</span></code> and <code class="docutils literal notranslate"><span class="pre">viscous</span> <span class="pre">dissipation</span></code> must be set (see Bonuses for results without viscous dissipation).</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>#---------------------------------------------------
 # Multiphysics
@@ -280,7 +456,10 @@ subsection multiphysics
 end
 </pre></div>
 </div>
-<p>The` analytical solution` is defined, according to the fluid and simulation properties:</p>
+</section>
+<section id="analytical-solution">
+<h3><span class="section-number">2.3.4.6. </span>Analytical solution<a class="headerlink" href="#analytical-solution" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">analytical</span> <span class="pre">solution</span></code> is defined, according to the fluid and simulation properties:</p>
 <div class="math-wrapper"><div class="math notranslate nohighlight">
 \[T(x) = T_\omega + \frac{\rho \nu v^2}{2K}\left ( 1 - \left ( \frac{x}{B} \right )^2 \right )\]</div></div>
 <p>with <span class="math notranslate nohighlight">\(x\)</span> the axis perpendicular to the plates, <span class="math notranslate nohighlight">\(\rho\)</span> the density, <span class="math notranslate nohighlight">\(\nu\)</span> the kinematic viscosity, <span class="math notranslate nohighlight">\(K\)</span> the thermal conductivity, <span class="math notranslate nohighlight">\(T_\omega\)</span> the heating temperature and <span class="math notranslate nohighlight">\(v\)</span> the velocity of the right plate (bc 1), and <span class="math notranslate nohighlight">\(B\)</span> is the width between the two plates.</p>
@@ -300,6 +479,9 @@ subsection analytical solution
 end
 </pre></div>
 </div>
+</section>
+<section id="boundary-conditions">
+<h3><span class="section-number">2.3.4.7. </span>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">boundary</span> <span class="pre">conditions</span></code> are set for:</p>
 <ul class="simple">
 <li><p>the fluid dynamic in <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">boundary</span> <span class="pre">conditions</span></code>, with <code class="docutils literal notranslate"><span class="pre">noslip</span></code> at the left wall (<code class="docutils literal notranslate"><span class="pre">bc</span> <span class="pre">0</span></code>) and a velocity of <code class="docutils literal notranslate"><span class="pre">2</span></code> in the y-direction at the right wall (<code class="docutils literal notranslate"><span class="pre">bc</span> <span class="pre">1</span></code>),</p></li>
@@ -342,34 +524,38 @@ subsection boundary conditions heat transfer
 end
 </pre></div>
 </div>
-<p>The simulation is launched in the same folder as the <code class="docutils literal notranslate"><span class="pre">.prm</span></code> file, using the gls_navier_stokes_2d solver. It takes only about 5 seconds with one cpu:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>../../exe/bin/gls_navier_stokes_2d warming_up_viscous_fluid.prm
+</section>
+</section>
+<section id="running-the-simulation">
+<h2><span class="section-number">2.3.5. </span>Running the simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
+<p>The simulation is launched in the same folder as the <code class="docutils literal notranslate"><span class="pre">.prm</span></code> file, using the <code class="docutils literal notranslate"><span class="pre">gls_navier_stokes_2d</span></code> solver. It takes only about 5 seconds with one cpu:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>../../exe/bin/gls_navier_stokes_2d warming-up-viscous-fluid.prm
 </pre></div>
 </div>
 </section>
 <section id="results">
-<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3.6. </span>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <section id="visualizations">
-<h3>Visualizations<a class="headerlink" href="#visualizations" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.6.1. </span>Visualizations<a class="headerlink" href="#visualizations" title="Permalink to this headline">¶</a></h3>
 <p>Convergence with regards to the analytical solution on the temperature:</p>
-<img alt="Convergence with regards to the analytical solution on the temperature" class="align-center" src="../../../_images/error_analytical.png"/>
+<a class="reference internal image-reference" href="../../../_images/error-analytical.png"><img alt="Convergence with regards to the analytical solution on the temperature" class="align-center" src="../../../_images/error-analytical.png" style="height: 10cm;"/></a>
 <p>Domain with temperature:</p>
-<a class="reference internal image-reference" href="../../../_images/domain_t0.png"><img alt="Domain with temperature (t = 0)" src="../../../_images/domain_t0.png" style="width: 40%;"/></a>
-<a class="reference internal image-reference" href="../../../_images/domain_t1.png"><img alt="Domain with temperature (t = 1)" src="../../../_images/domain_t1.png" style="width: 40%;"/></a>
-<a class="reference internal image-reference" href="../../../_images/domain_t2.png"><img alt="Domain with temperature (t = 2)" src="../../../_images/domain_t2.png" style="width: 40%;"/></a>
-<a class="reference internal image-reference" href="../../../_images/domain_t7.png"><img alt="Domain with temperature (t = 3)" src="../../../_images/domain_t7.png" style="width: 40%;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t0.png"><img alt="Domain with temperature (t = 0)" src="../../../_images/domain-t0.png" style="height: 10cm;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t1.png"><img alt="Domain with temperature (t = 1)" src="../../../_images/domain-t1.png" style="height: 10cm;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t2.png"><img alt="Domain with temperature (t = 2)" src="../../../_images/domain-t2.png" style="height: 10cm;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t7.png"><img alt="Domain with temperature (t = 3)" src="../../../_images/domain-t7.png" style="height: 10cm;"/></a>
 <p>Temperature evolution over time:</p>
-<img alt="Temperature evolution over time" class="align-center" src="../../../_images/temperature_over_time.png"/>
+<a class="reference internal image-reference" href="../../../_images/temperature-over-time.png"><img alt="Temperature evolution over time" class="align-center" src="../../../_images/temperature-over-time.png" style="height: 15cm;"/></a>
 </section>
 <section id="physical-interpretation">
-<h3>Physical interpretation<a class="headerlink" href="#physical-interpretation" title="Permalink to this headline">¶</a></h3>
-<p>From <span class="math notranslate nohighlight">\(t=0s\)</span> to <span class="math notranslate nohighlight">\(t=2s\)</span>, the right plate (<span class="math notranslate nohighlight">\(T=80C\)</span>) heats up the fluid (initially at <span class="math notranslate nohighlight">\(T=0C\)</span>). At <span class="math notranslate nohighlight">\(t=2s\)</span>, the temperature is quasi-homogeneous in the fluid, with <span class="math notranslate nohighlight">\(T=80C\)</span>. As the fluid continues to be forced to flow at the right wall, viscous dissipation generates more heat, so that the wall with a fixed temperature of <span class="math notranslate nohighlight">\(T=80C\)</span> now cools down the fluid. A steady state between viscous dissipation heating and the fixed temperature cooling is reached at about <span class="math notranslate nohighlight">\(t=4.5s\)</span>.</p>
+<h3><span class="section-number">2.3.6.2. </span>Physical interpretation<a class="headerlink" href="#physical-interpretation" title="Permalink to this headline">¶</a></h3>
+<p>From <span class="math notranslate nohighlight">\(t=0s\)</span> to <span class="math notranslate nohighlight">\(t=2s\)</span>, the right plate (<span class="math notranslate nohighlight">\(T=80^\circ\)</span>) heats up the fluid (initially at <span class="math notranslate nohighlight">\(T=0^\circ\)</span>). At <span class="math notranslate nohighlight">\(t=2s\)</span>, the temperature is quasi-homogeneous in the fluid, with <span class="math notranslate nohighlight">\(T=80^\circ\)</span>. As the fluid continues to be forced to flow at the right wall, viscous dissipation generates more heat, so that the wall with a fixed temperature of <span class="math notranslate nohighlight">\(T=80^\circ\)</span> now cools down the fluid. A steady state between viscous dissipation heating and the fixed temperature cooling is reached at about <span class="math notranslate nohighlight">\(t=4.5s\)</span>.</p>
 </section>
 </section>
 <section id="bonuses">
-<h2>Bonuses<a class="headerlink" href="#bonuses" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.3.7. </span>Bonuses<a class="headerlink" href="#bonuses" title="Permalink to this headline">¶</a></h2>
 <section id="results-for-water">
-<h3>Results for water<a class="headerlink" href="#results-for-water" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.7.1. </span>Results for water<a class="headerlink" href="#results-for-water" title="Permalink to this headline">¶</a></h3>
 <p>For water, <code class="docutils literal notranslate"><span class="pre">physical</span> <span class="pre">properties</span></code> are:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>#---------------------------------------------------
 # Physical Properties
@@ -384,20 +570,83 @@ end
 </pre></div>
 </div>
 <p>As water has a higher thermal conductivity than oil, the temperature becomes quasi-homogeneous sooner (around <span class="math notranslate nohighlight">\(t=1s\)</span>). And as it is far less viscous, the heat generated by viscous dissipation is not visible on the temperature-over-time plot. However it still exists, as seen when the temperature scale is adapted.</p>
-<img alt="Temperature evolution over time" class="align-center" src="../../../_images/temperature_over_time_water.png"/>
-<a class="reference internal image-reference" href="../../../_images/domain_t05_water.png"><img alt="Domain with temperature (t = 0.5)" src="../../../_images/domain_t05_water.png" style="width: 30%;"/></a>
-<a class="reference internal image-reference" href="../../../_images/domain_t7_water.png"><img alt="Domain with temperature (t = 7)" src="../../../_images/domain_t7_water.png" style="width: 30%;"/></a>
-<a class="reference internal image-reference" href="../../../_images/domain_t7_water_rescale.png"><img alt="Rescaled domain with temperature (t = 7)" src="../../../_images/domain_t7_water_rescale.png" style="width: 30%;"/></a>
+<a class="reference internal image-reference" href="../../../_images/temperature-over-time-water.png"><img alt="Temperature evolution over time" class="align-center" src="../../../_images/temperature-over-time-water.png" style="height: 15cm;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t05-water.png"><img alt="Domain with temperature (t = 0.5)" src="../../../_images/domain-t05-water.png" style="width: 30%;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t7-water.png"><img alt="Domain with temperature (t = 7)" src="../../../_images/domain-t7-water.png" style="width: 30%;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t7-water-rescale.png"><img alt="Rescaled domain with temperature (t = 7)" src="../../../_images/domain-t7-water-rescale.png" style="width: 30%;"/></a>
 </section>
 <section id="results-without-viscous-dissipation">
-<h3>Results without viscous dissipation<a class="headerlink" href="#results-without-viscous-dissipation" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">2.3.7.2. </span>Results without viscous dissipation<a class="headerlink" href="#results-without-viscous-dissipation" title="Permalink to this headline">¶</a></h3>
 <p>The viscous dissipation can be disabled physically, if the two plates remain fixed (<code class="docutils literal notranslate"><span class="pre">v=0</span></code> for <code class="docutils literal notranslate"><span class="pre">bc</span> <span class="pre">1</span></code>), or numerically with <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">viscous</span> <span class="pre">dissipation</span> <span class="pre">=</span> <span class="pre">false</span></code>. Both cases give the same results shown below. The fluid considered is still water.</p>
-<p>After the fluid has been heated up by the right plate, the temperature is really homogeneous throughout the domain, and both minimum and maximum temperatures stay at <span class="math notranslate nohighlight">\(T_\omega=80C\)</span>. Adapting the temperature scale shows that there is no viscous dissipation at all.</p>
-<img alt="Temperature evolution over time" class="align-center" src="../../../_images/temperature_over_time_water_nodiss.png"/>
-<a class="reference internal image-reference" href="../../../_images/domain_t05_water_nodiss.png"><img alt="Domain with temperature (t = 0.5)" src="../../../_images/domain_t05_water_nodiss.png" style="width: 30%;"/></a>
-<a class="reference internal image-reference" href="../../../_images/domain_t7_water_nodiss.png"><img alt="Domain with temperature (t = 7)" src="../../../_images/domain_t7_water_nodiss.png" style="width: 30%;"/></a>
-<a class="reference internal image-reference" href="../../../_images/domain_t7_water_rescale_nodiss.png"><img alt="Rescaled domain with temperature (t = 7)" src="../../../_images/domain_t7_water_rescale_nodiss.png" style="width: 30%;"/></a>
+<p>After the fluid has been heated up by the right plate, the temperature is really homogeneous throughout the domain, and both minimum and maximum temperatures stay at <span class="math notranslate nohighlight">\(T_\omega=80^\circ\)</span>. Adapting the temperature scale shows that there is no viscous dissipation at all.</p>
+<a class="reference internal image-reference" href="../../../_images/temperature-over-time-water-nodiss.png"><img alt="Temperature evolution over time" class="align-center" src="../../../_images/temperature-over-time-water-nodiss.png" style="height: 15cm;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t05-water-nodiss.png"><img alt="Domain with temperature (t = 0.5)" src="../../../_images/domain-t05-water-nodiss.png" style="width: 30%;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t7-water-nodiss.png"><img alt="Domain with temperature (t = 7)" src="../../../_images/domain-t7-water-nodiss.png" style="width: 30%;"/></a>
+<a class="reference internal image-reference" href="../../../_images/domain-t7-water-rescale-nodiss.png"><img alt="Rescaled domain with temperature (t = 7)" src="../../../_images/domain-t7-water-rescale-nodiss.png" style="width: 30%;"/></a>
 </section>
+<section id="horizontal-domain">
+<h3><span class="section-number">2.3.7.3. </span>Horizontal domain<a class="headerlink" href="#horizontal-domain" title="Permalink to this headline">¶</a></h3>
+<p>Several adjustments have to be made in the <cite>.prm</cite> to turn the domain clockwise, so that it becomes horizontal, with the upper wall being the no slip and thermal insulation boundary condition, and the lower wall with the flow in the y-direction (<span class="math notranslate nohighlight">\(v=2\)</span>) and heating at Tw:</p>
+<ul class="simple">
+<li><p>in <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">mesh</span></code>: <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">grid</span> <span class="pre">arguments</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">0</span> <span class="pre">:</span> <span class="pre">1,</span> <span class="pre">0.5</span> <span class="pre">:</span> <span class="pre">true</span></code></p></li>
+<li><dl class="simple">
+<dt>in <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">analytical</span> <span class="pre">solution</span></code>, <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">temperature</span></code>:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">Function</span> <span class="pre">expression</span> <span class="pre">=</span> <span class="pre">Tw+(((rho*nu)*v*v)/(2*K))*(1-(y/B)*(y/B))</span></code></p>
+</dd>
+</dl>
+</li>
+<li><p>and most importantly, the <code class="docutils literal notranslate"><span class="pre">id</span></code> of <code class="docutils literal notranslate"><span class="pre">boundary</span> <span class="pre">conditions</span></code> should be adapted to use the bottom and top wall (see the <a class="reference external" href="https://www.dealii.org/current/doxygen/deal.II/namespaceGridGenerator.html#a56019d263ae45708302d5d7599f0d458">deal.II documentation on hyper_rectangle grid generator</a> for further details):</p></li>
+</ul>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>subsection boundary conditions
+  set number                  = 2
+    subsection bc 0
+    set id = 2
+        set type              = noslip
+    end
+    subsection bc 1
+    set id = 3
+        set type              = function
+        subsection u
+            set Function expression = 2
+        end
+        subsection v
+            set Function expression = 0
+        end
+    end
+end
+
+subsection boundary conditions heat transfer
+  set number                  = 4
+    subsection bc 2
+    set id = 2
+        set type          = convection-radiation
+        set h             = 0
+        set Tinf          = 0
+    end
+    subsection bc 3
+    set id = 3
+        set type              = temperature
+        set value             = 80
+    end
+end
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>For the fluid <code class="docutils literal notranslate"><span class="pre">boundary</span> <span class="pre">conditions</span></code>, we use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">number</span> <span class="pre">=</span> <span class="pre">2</span></code>, whereas for <code class="docutils literal notranslate"><span class="pre">boundary</span> <span class="pre">conditions</span> <span class="pre">heat</span> <span class="pre">transfer</span></code> we use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">number</span> <span class="pre">=</span> <span class="pre">4</span></code>. These two notations are perfectly equivalent, as the boundary conditions are <code class="docutils literal notranslate"><span class="pre">none</span></code> by default (or <code class="docutils literal notranslate"><span class="pre">noflux</span></code> in the case of heat transfer, see <a class="reference internal" href="../../../parameters/cfd/boundary_conditions_multiphysics.html"><span class="doc">Boundary Contitions - Multiphysics</span></a>). However, it is important to make sure that:</p>
+<ul class="simple">
+<li><p>the index in <code class="docutils literal notranslate"><span class="pre">subsection</span> <span class="pre">bc</span> <span class="pre">..</span></code> is coherent with the <code class="docutils literal notranslate"><span class="pre">number</span></code> set (if <code class="docutils literal notranslate"><span class="pre">number</span> <span class="pre">=</span> <span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">bc</span> <span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">bc</span> <span class="pre">1</span></code> are created but <code class="docutils literal notranslate"><span class="pre">bc</span> <span class="pre">2</span></code> does not exist),</p></li>
+<li><p>the index in <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">id</span> <span class="pre">=</span> <span class="pre">..</span></code> is coherent with the <code class="docutils literal notranslate"><span class="pre">id</span></code> of the boundary in the mesh (here, the deal.II generated mesh).</p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="possibilities-for-extension">
+<h2><span class="section-number">2.3.8. </span>Possibilities for extension<a class="headerlink" href="#possibilities-for-extension" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Study the <strong>sensitivity to the time step</strong>, namely to assess how large the <code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">step</span></code> can be before stating any difference in the heat transfer solution.</p></li>
+<li><p>Test a <strong>different time integration scheme</strong> and see if there is any difference in the computational cost and/or the precision with regards to the analytical solution.</p></li>
+<li><p>See how the <strong>resolution order</strong> (<code class="docutils literal notranslate"><span class="pre">velocity</span> <span class="pre">order</span></code>, <code class="docutils literal notranslate"><span class="pre">pressure</span> <span class="pre">order</span></code> and <code class="docutils literal notranslate"><span class="pre">temperature</span> <span class="pre">order</span></code>) affects the precision with regards to the analytical solution.</p></li>
+</ul>
 </section>
 </section>
 
@@ -406,23 +655,23 @@ end
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../../../contributing.html">
+          <a class="next-page" href="../melting-cavity/melting-cavity.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Contributing</div>
+                <div class="title"><span class="section-number">2.4. </span>Melting Cavity</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../multiphysics.html">
+          <a class="prev-page" href="../stefan-problem/stefan-problem.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Multiphysics Examples</div>
+                <div class="title"><span class="section-number">2.2. </span>Stefan problem : melting of a solid</div>
                 
               </div>
             </a>
@@ -452,18 +701,33 @@ end
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Warming Up a Viscous Fluid</a><ul>
-<li><a class="reference internal" href="#parameter-file">Parameter file</a></li>
-<li><a class="reference internal" href="#results">Results</a><ul>
-<li><a class="reference internal" href="#visualizations">Visualizations</a></li>
-<li><a class="reference internal" href="#physical-interpretation">Physical interpretation</a></li>
+<li><a class="reference internal" href="#">2.3. Warming Up a Viscous Fluid</a><ul>
+<li><a class="reference internal" href="#features">2.3.1. Features</a></li>
+<li><a class="reference internal" href="#files-used-in-this-example">2.3.2. Files used in this example</a></li>
+<li><a class="reference internal" href="#description-of-the-case">2.3.3. Description of the case</a></li>
+<li><a class="reference internal" href="#parameter-file">2.3.4. Parameter file</a><ul>
+<li><a class="reference internal" href="#simulation-control">2.3.4.1. Simulation control</a></li>
+<li><a class="reference internal" href="#fem">2.3.4.2. FEM</a></li>
+<li><a class="reference internal" href="#physical-properties">2.3.4.3. Physical properties</a></li>
+<li><a class="reference internal" href="#mesh">2.3.4.4. Mesh</a></li>
+<li><a class="reference internal" href="#multiphysics">2.3.4.5. Multiphysics</a></li>
+<li><a class="reference internal" href="#analytical-solution">2.3.4.6. Analytical solution</a></li>
+<li><a class="reference internal" href="#boundary-conditions">2.3.4.7. Boundary conditions</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#bonuses">Bonuses</a><ul>
-<li><a class="reference internal" href="#results-for-water">Results for water</a></li>
-<li><a class="reference internal" href="#results-without-viscous-dissipation">Results without viscous dissipation</a></li>
+<li><a class="reference internal" href="#running-the-simulation">2.3.5. Running the simulation</a></li>
+<li><a class="reference internal" href="#results">2.3.6. Results</a><ul>
+<li><a class="reference internal" href="#visualizations">2.3.6.1. Visualizations</a></li>
+<li><a class="reference internal" href="#physical-interpretation">2.3.6.2. Physical interpretation</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#bonuses">2.3.7. Bonuses</a><ul>
+<li><a class="reference internal" href="#results-for-water">2.3.7.1. Results for water</a></li>
+<li><a class="reference internal" href="#results-without-viscous-dissipation">2.3.7.2. Results without viscous dissipation</a></li>
+<li><a class="reference internal" href="#horizontal-domain">2.3.7.3. Horizontal domain</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#possibilities-for-extension">2.3.8. Possibilities for extension</a></li>
 </ul>
 </li>
 </ul>
@@ -480,6 +744,8 @@ end
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

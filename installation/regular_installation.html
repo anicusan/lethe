@@ -1,0 +1,619 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Windows with WSL" href="windows_wsl.html" /><link rel="prev" title="Installation" href="installation.html" />
+
+    <meta name="generator" content="sphinx-4.3.1, furo 2021.11.23"/>
+        <title>Regular installation on Linux - Lethe documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=0af69da206d614734f649b27d4cdc2dd6c31f41d" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Lethe  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">Lethe  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="installation.html">Installation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Regular installation on Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows_wsl.html">Windows with WSL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apple_arm.html">Installation on Apple ARM (M1 or M2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="digital_alliance.html">Running Lethe on Digital Research Alliance of Canada clusters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../structure.html">Folder structure of Lethe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_simulation.html">Launching your first simulation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../parameters/parameters.html">Parameters guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../parameters/cfd/cfd.html">General, CFD and Multiphysics</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/simulation_control.html">Simulation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/dimensionality.html">Dimensionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/physical_properties.html">Physical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/initial_conditions.html">Initial Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/mesh.html">Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/mesh_adaptation_control.html">Mesh Adaptation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/fem.html">Finite element interpolation (FEM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/boundary_conditions_cfd.html">Boundary conditions - CFD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/source_term.html">Source term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/analytical_solution.html">Analytical solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/force_and_torque.html">Force and torque calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/post_processing.html">Post-Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/timer.html">Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/non-linear_solver_control.html">Non-linear Solver Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/linear_solver_control.html">Linear Solver Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/stabilization.html">Stabilization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/multiphysics.html">Multiphysics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/volume_of_fluid.html">Multiphase Flow - Volume of Fluid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/boundary_conditions_multiphysics.html">Boundary Contitions - Multiphysics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/nitsche.html">Nitsche Immersed Boundary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/restart.html">Restart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/dynamic_flow_control.html">Dynamic flow control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/laser_heat_source.html">Laser heat source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/box_refinement.html">Box refinement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/cfd/velocity_source.html">Velocity Source</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../parameters/dem/dem.html">Discrete Element Method (DEM)</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/simulation_control.html">Simulation Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/timer.html">Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/test.html">Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/model_parameters.html">Model Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/lagrangian_physical_properties.html">Lagrangian Physical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/insertion_info.html">Insertion Info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/floating_wall.html">Floating Wall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/floating_mesh.html">Floating Mesh (Solid Objects)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/mesh.html">Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/dem/boundary_conditions.html">Boundary Conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../parameters/unresolved-cfd-dem/unresolved-cfd-dem.html">Unresolved CFD-DEM</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/unresolved-cfd-dem/void-fraction.html">Void Fraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/unresolved-cfd-dem/cfd-dem.html">CFD-DEM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../parameters/resolved-cfd-dem/resolved-cfd-dem.html">Resolved CFD-DEM</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../parameters/rpt/rpt.html">Radioactive Particle Tracking (RPT)</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/rpt/rpt_parameters.html">RPT parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/rpt/detector_parameters.html">Detector parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/rpt/parameter_tuning.html">Parameter tuning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parameters/rpt/fem_reconstruction.html">FEM Reconstruction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples/examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/incompressible-flow/incompressible-flow.html">Incompressible Flow</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/2d-lid%E2%80%90driven-cavity-flow/lid%E2%80%90driven-cavity-flow.html">1. 2D Lid-driven cavity flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/2d-flow-around-cylinder/2d-flow-around-cylinder.html">2. 2D Flow around a cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/2d-taylor-couette-flow/2d-taylor-couette-flow.html">3. 2D Taylor-Couette flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/2d-backward-facing-step/2d-backward-facing-step.html">4. 2D Flow past a backward-facing step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/2d-transient-around-ahmed-body/2d-transient-around-ahmed-body.html">5. 2D Transient flow around an Ahmed body</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/2d-transient-flow-around-cylinder/2d-transient-flow-around-cylinder.html">6. 2D Transient flow around a cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/3d-flow-around-sphere/flow-around-sphere.html">7. 3D Flow around a sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/3d-flow-over-periodic-hills/3d-flow-over-periodic-hills.html">8. 3D Flow over periodic hills</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/2d-taylor-couette-flow-nitsche/2d-taylor-couette-flow-nitsche.html">9. 2D Taylor-Couette flow using Nitsche immersed boundary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/3d-mixer-using-single-rotating-frame/3d-mixer-using-single-rotating-frame.html">10. 3D Ribbon mixer using a single rotating reference frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/incompressible-flow/3d-nitsche-mixer-with-pbt-impeller/nitsche-mixer-with-pbt-impeller.html">11. 3D Mixer with pitched-blade turbine impeller using Nitsche immersed boundary</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/multiphysics/multiphysics.html">Multiphysics Examples</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../examples/multiphysics/vof.html">1. VOF</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/dam-break/dam-break.html">1.1. Dam-break</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/rayleigh-taylor-instability/rayleigh-taylor-instability.html">1.2. Rayleigh-Taylor instability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/rising-bubble/rising-bubble.html">1.3. Rising bubble</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../examples/multiphysics/heat-transfer.html">2. Heat transfer</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/rayleigh-benard-convection/rayleigh-benard-convection.html">2.1. Rayleigh-Bénard Convection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/stefan-problem/stefan-problem.html">2.2. Stefan problem : melting of a solid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/warming-up-a-viscous-fluid/warming-up-a-viscous-fluid.html">2.3. Warming Up a Viscous Fluid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/melting-cavity/melting-cavity.html">2.4. Melting Cavity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/laser-heating/laser-heating.html">2.5. Laser heating</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/laser-meltpool/laser-meltpool.html">2.6. Laser meltpool</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../examples/multiphysics/tracer.html">3. Tracer</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../examples/multiphysics/tracer-through-cad-junction/tracer-through-cad-junction.html">3.1. Tracer through CAD Junction in Simplex</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/dem/dem.html">Discrete Element Method</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/dem/packing-in-circle/packing-in-circle.html">1. Packing in circle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/dem/packing-in-ball/packing-in-ball.html">2. Packing in ball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/dem/rotating-drum/rotating-drum.html">3. Rotating drum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/dem/rotating-drum-with-post-processing/rotating-drum-with-post-processing.html">4. Rotating drum with post-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/dem/rotation-of-box/rotation-of-box.html">5. Rotation of box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/dem/silo/silo.html">6. Silo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/dem/rectangular-hopper/rectangular-hopper.html">7. Rectangular hopper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/dem/3d-small-scale-rotating-drum/3d-small-scale-rotating-drum.html">8. Small scale rotating drum (3D)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/dem/granular-mixer/granular-mixer.html">9. Granular mixer</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/unresolved-cfd-dem/unresolved-cfd-dem.html">Unresolved CFD-DEM</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/unresolved-cfd-dem/cylindrical-packed-bed/cylindrical-packed-bed.html">1. Cylindrical packed bed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/unresolved-cfd-dem/square-fluidized-bed/square-fluidized-bed.html">2. Gas-solid fluidized bed</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/resolved-cfd-dem/resolved-cfd-dem.html">Resolved CFD-DEM Examples</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/resolved-cfd-dem/cylinder-with-sharp-interface/cylinder-with-sharp-interface.html">1. Flow around a cylinder using the sharp interface method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/resolved-cfd-dem/sedimentation-1-particle/sedimentation-1-particle.html">2. Sedimentation of one particle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/resolved-cfd-dem/sphere-carreau-with-sharp-interface/sphere-carreau-with-sharp-interface.html">3. Non-Newtonian flow past a sphere</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/rpt/rpt.html">Radioactive Particle Tracking (RPT)</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/rpt/photon-count-calculation-in-a-cylindrical-vessel/photon-count-calculation-in-a-cylindrical-vessel.html">1. Photon count calculation in a cylindrical vessel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/rpt/tuning-parameters-with-nomad/tuning-parameters-with-nomad.html">2. Tuning Count Calculation Model Parameters with NOMAD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory/theory.html">Theory</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../theory/fluid_dynamics/fluid_dynamics.html">Fluid dynamics</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../theory/fluid_dynamics/navier-stokes.html">The Incompressible Navier-Stokes equations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../theory/fluid_dynamics/fem_formulation.html">Origin of the finite element formulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../theory/fluid_dynamics/stabilization.html">On the need for stabilization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../theory/fluid_dynamics/linear_solvers.html">Linear solvers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../theory/fluid_dynamics/rheology.html">Rheology and non-Newtonian fluids</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/dem/dem.html">Discret Element Method (DEM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory/unresolved_cfd-dem/unresolved_cfd-dem.html">Unresolved CFD-DEM coupling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tools/tools.html">Tools</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tools/gmsh/gmsh.html">Introduction on how to use GMSH</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../referencing.html">Referencing Lethe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="regular-installation-on-linux">
+<h1>Regular installation on Linux<a class="headerlink" href="#regular-installation-on-linux" title="Permalink to this headline">¶</a></h1>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/linux.png"><img alt="../_images/linux.png" src="../_images/linux.png" style="height: 100px;"/></a>
+</figure>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Distributions compatibility: Ubuntu 18.04 LTS, Ubuntu 20.04 LTS, Ubuntu 22.04 LTS, Centos 7 and Manjaro</p>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Dependencies: deal.II library (<a class="reference external" href="https://www.dealii.org/">deal.II website</a>) and its dependencies (MPI, numdiff, p4est, trilinos and METIS)</dt><dd><ul>
+<li><p>Lethe requires a modern version of the deal.II library. At the time of this writing, <code class="docutils literal notranslate"><span class="pre">deal.II</span> <span class="pre">9.4</span></code> and <code class="docutils literal notranslate"><span class="pre">deal.II</span> <span class="pre">10.0pre</span></code> (the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch version) are supported.</p></li>
+<li><p>The compatibility with these two branches is ensured by Continuous Integration (CI) using Github Actions.</p></li>
+<li><p>A <a class="reference external" href="https://github.com/lethe-cfd/dealii">dealii fork</a> is maintained by Lethe team. This fork does not include any modification to deal.II library, but it is the latest version with which Lethe was tested. We work hard to ensure compatibility with the latest deal.II version and we do not modify the library except through pull requests on the official deal.II repository.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Lethe cannot be installed if deal.II has not been configured with p4est, trilinos and METIS. Although Lethe can be run in serial and parallel mode (through MPI), it uses p4est, METIS and trilinos for mesh decomposition and the linear solvers respectively.</p>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Lethe installation steps:</dt><dd><ol class="arabic simple">
+<li><p>Installation of deal.II dependencies (MPI, numdiff, p4est, trilinos and METIS)</p></li>
+<li><p>Installation of the deal.II library</p></li>
+<li><p>Installation of Lethe</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Methods to install deal.II and its dependencies:</dt><dd><ol class="arabic simple">
+<li><p>through candi shell script (<a class="reference external" href="https://github.com/dealii/candi">candi github page</a>): <strong>this is by far the easiest way to proceed</strong>, since it requires much less manual intervention. Even if you do not want to use candi to install deal.II, you can use it for the dependencies.</p></li>
+<li><p>manually</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>On a single core computer with 8GB of RAM, count up to 8 hours for a first installation, and 3 hours for a deal.II update. On a machine with 16 cores and 32GB of RAM, this process will take less than an hour or so. The installation of deal.II and its dependencies (especially trilinos), can be extremely RAM consuming. Installation on a machine with less than 8GB of RAM is difficult at best, impossible at worst.</p>
+</div>
+<section id="installing-deal-ii-using-candi-step-1">
+<h2>Installing deal.II using candi (Step #1)<a class="headerlink" href="#installing-deal-ii-using-candi-step-1" title="Permalink to this headline">¶</a></h2>
+<p>To install the dependencies (MPI, p4est, trilinos and METIS) all together using candi, the <a class="reference external" href="https://github.com/dealii/candi.git">procedure</a> on the candi repository can be followed.</p>
+<p>Clone the candi git repository in a folder of your choice  (e.g. <code class="docutils literal notranslate"><span class="pre">/home/username/software</span></code>). You can edit the <code class="docutils literal notranslate"><span class="pre">candi.cfg</span></code> file if you want to alter which dependencies are compiled. This can notably be used to force the installation of the deal.II master version instead of the current stable version by setting the <code class="docutils literal notranslate"><span class="pre">STABLE_BUILD=false</span></code></p>
+<p>From the candi folder, the installation of candi can be launched using:</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>./candi.sh -j $num_proc --prefix=$path
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">$num_proc</span></code> is the number of threads you want to use to compile deal.II and <code class="docutils literal notranslate"><span class="pre">$path</span></code> the installation prefix that is desired (e.g. <code class="docutils literal notranslate"><span class="pre">/home/username/software/candi</span></code>).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For a computer with 8Gb of RAM, 1 thread (<code class="docutils literal notranslate"><span class="pre">num_proc=1</span></code>) should be used. For 16 Gb, 4 threads is reasonable. For 32 Gb, 16 threads or more can be used.</p>
+</div>
+<p>After installation, you should have a <code class="docutils literal notranslate"><span class="pre">deal.II-candi</span></code> folder in the installation prefix directory, with the dealii folder of the desired version (see section <a class="reference internal" href="#update-dealii"><span class="std std-ref">Updating deal.II</span></a>), as well as the required dependencies (p4est, trilinos, etc.).</p>
+<p>After installation, add an environment variable to your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> either manually or through the following command:</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>echo "export DEAL_II_DIR=/home/username/deal.ii-candi/deal.II-&lt;version&gt;" &gt;&gt; ~/.bashrc
+</pre></div>
+</div>
+</section>
+<section id="installing-deal-ii-manually-step-1">
+<h2>Installing deal.II manually (Step #1)<a class="headerlink" href="#installing-deal-ii-manually-step-1" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have installed deal.II through candi, you can skip right away to <a class="reference internal" href="#install-lethe"><span class="std std-ref">Installing lethe (Step #2)</span></a></p>
+</div>
+<p>We first need to install the deal.II dependencies.</p>
+<section id="mpi">
+<h3>MPI<a class="headerlink" href="#mpi" title="Permalink to this headline">¶</a></h3>
+<p>MPI, for Message Passing Interface, is required for the installation of all components of Lethe. Therefore it should be the first thing you install. On Debian Linux-based OS, MPI can be installed directly from your package manager.</p>
+<p>As an example, in Ubuntu:</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>sudo apt-get install libopenmpi-dev openmpi-bin openmpi-common
+</pre></div>
+</div>
+<p>In Manjaro or other arch based linux distribution:</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>sudo pacman -Sy openmpi
+</pre></div>
+</div>
+</section>
+<section id="numdiff">
+<h3>numdiff<a class="headerlink" href="#numdiff" title="Permalink to this headline">¶</a></h3>
+<p>numdiff is used within the automatic testing procedure of Lethe to compare files obtained through floating point arithmetic. Without numdiff, Lethe automatic tests may fail when they should not. numdiff can be installed directly from your package manager.</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>sudo apt-get install numdiff
+</pre></div>
+</div>
+<p>Regrettably, numdiff is not available in the pacman package manager. It can be downloaded from the following <a class="reference external" href="http://www.nongnu.org/numdiff/">website</a>. If you are using an arch distribution, we assume that you will already know how to carry on with the installation of numdiff.</p>
+</section>
+<section id="p4est">
+<h3>P4est<a class="headerlink" href="#p4est" title="Permalink to this headline">¶</a></h3>
+<p>To install p4est, the usual <a class="reference external" href="https://www.dealii.org/current/external-libs/p4est.html">installation</a> of deal.II can be followed.</p>
+</section>
+<section id="trilinos">
+<h3>Trilinos<a class="headerlink" href="#trilinos" title="Permalink to this headline">¶</a></h3>
+<p>The installation of trilinos should be done using the <a class="reference external" href="https://www.dealii.org/current/external-libs/trilinos.html">installation procedure</a> of deal.II.</p>
+</section>
+<section id="metis">
+<h3>METIS<a class="headerlink" href="#metis" title="Permalink to this headline">¶</a></h3>
+<p>METIS is used for mesh partitioning for parallel computing purposes, specifically in cases with simplex grids. It can be downloaded in this <a class="reference external" href="http://glaros.dtc.umn.edu/gkhome/metis/metis/download">link</a> or through candi.</p>
+</section>
+<section id="installation-of-deal-ii">
+<h3>Installation of deal.II<a class="headerlink" href="#installation-of-deal-ii" title="Permalink to this headline">¶</a></h3>
+<p>Clone deal.II from the <a class="reference external" href="https://github.com/dealii/dealii">deal.ii official repository</a></p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/dealii/dealii
+</pre></div>
+</div>
+<p>Configure deal.II in a build folder at the same level as the source code</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>mkdir build
+cd build
+</pre></div>
+</div>
+<p>Depending on how you have installed p4est, Trilinos and METIS, you may need to specify the installation folder of the three libraries</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>cmake ../dealii -DDEAL_II_WITH_MPI=ON -DDEAL_II_WITH_TRILINOS=ON -DTRILINOS_DIR=path/to/your/trilinos/installation -DDEAL_II_WITH_P4EST=ON -DP4EST_DIR=path/to/your/p4est/installation  -DDEAL_II_WITH_METIS=ON -DMETIS_DIR=path/to/your/metis/installation -DCMAKE_INSTALL_PREFIX=/path/to/desired/installation`
+</pre></div>
+</div>
+<p>Compile deal.II</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>make -j&lt;nprocessor&gt; install
+</pre></div>
+</div>
+<p>Create an environment variable for the deal.II directory</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>export DEAL_II_DIR=/path/to/dealii/installation
+</pre></div>
+</div>
+<p>It is generally recommended to add the variable to your bashrc so it is always loaded:</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>echo "export DEAL_II_DIR=/path/to/dealii/installation" &gt;&gt; ~/.bashrc
+</pre></div>
+</div>
+</section>
+</section>
+<section id="installing-lethe-step-2">
+<span id="install-lethe"></span><h2>Installing lethe (Step #2)<a class="headerlink" href="#installing-lethe-step-2" title="Permalink to this headline">¶</a></h2>
+<p>Clone lethe from the <a class="reference external" href="https://github.com/lethe-cfd/lethe">Lethe official repository</a>.</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/lethe-cfd/lethe
+</pre></div>
+</div>
+<p>Create a build folder at the same level as the lethe folder</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>mkdir build
+cd build
+</pre></div>
+</div>
+<p>Build Lethe choosing the compilation option (Debug or Release). You can also optionally specify a path to an installation directory of your choice. We recommend that you do so, since this makes using Lethe much more comfortable.</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>cmake ../lethe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/home/username/path/to/installation
+</pre></div>
+</div>
+<p>or</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>cmake ../lethe -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/username/path/to/installation
+</pre></div>
+</div>
+<p>Then you can compile:</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>make -j&lt;numprocs&gt;
+</pre></div>
+</div>
+</section>
+<section id="testing-your-installation-step-3">
+<h2>Testing your installation (Step #3)<a class="headerlink" href="#testing-your-installation-step-3" title="Permalink to this headline">¶</a></h2>
+<p>Lethe comes pre-packaged with an extensive test suit for all of its modules. It can be used to test the validity of your installation. Within the build folder, the test suite can be launched with the following command:</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span>ctest -j $numprocs
+</pre></div>
+</div>
+<p>where $numprocs can be the number of physical cores on your machine.</p>
+</section>
+<section id="updating-deal-ii">
+<span id="update-dealii"></span><h2>Updating deal.II<a class="headerlink" href="#updating-deal-ii" title="Permalink to this headline">¶</a></h2>
+<section id="through-the-git-repository">
+<h3>Through the git repository<a class="headerlink" href="#through-the-git-repository" title="Permalink to this headline">¶</a></h3>
+<p>The deal.II version supported by Lethe is updated and tested every week or so, see the repository <a class="reference external" href="https://github.com/lethe-cfd/dealii">here</a>. If Lethe was installed with this forked version of deal.II, updating your deal.II installation is as simple as pulling the repository and recompiling the deal.II library. If your deal.II was installed manually using the deal.II master repository, the same process can be used.</p>
+</section>
+<section id="with-candi">
+<h3>With candi<a class="headerlink" href="#with-candi" title="Permalink to this headline">¶</a></h3>
+<p>In the candi folder (for instance, <code class="docutils literal notranslate"><span class="pre">/home/username/software/candi</span></code>), modify the <code class="docutils literal notranslate"><span class="pre">candi.cfg</span></code> to get the latest dealii version, by changing the <code class="docutils literal notranslate"><span class="pre">DEAL_II_VERSION</span></code> variable in the case of an official release, or by changing the <code class="docutils literal notranslate"><span class="pre">STABLE_BUILD</span></code> in the case of a development release. The <code class="docutils literal notranslate"><span class="pre">candi.cfg</span></code> should contain:</p>
+<div class="copy-button highlight-text notranslate"><div class="highlight"><pre><span></span># Install the following deal.II version:
+DEAL_II_VERSION=v9.3.0
+
+# Would you like to build stable version of deal.II?
+# If STABLE_BUILD=false, then the development version of deal.II will be
+# installed.
+STABLE_BUILD=true
+#STABLE_BUILD=false
+</pre></div>
+</div>
+<p>Run the command <code class="docutils literal notranslate"><span class="pre">./candi.sh</span></code> to install the new version of dealii.</p>
+<p>In your <code class="docutils literal notranslate"><span class="pre">/home/deal.ii-candi</span></code> folder, you should have a new folder with the dealii updated version (specified in <code class="docutils literal notranslate"><span class="pre">DEAL_II_VERSION</span></code>, or <code class="docutils literal notranslate"><span class="pre">deal.II-master</span></code> in the case of development version)</p>
+<p>You might need to delete the build folder of Lethe and redo the installation process from scratch, but this is rarely the case.</p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="windows_wsl.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Windows with WSL</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="installation.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Installation</div>
+                
+              </div>
+            </a>
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Lethe |
+          Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+          <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            | <a class="muted-link" href="../_sources/installation/regular_installation.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Regular installation on Linux</a><ul>
+<li><a class="reference internal" href="#installing-deal-ii-using-candi-step-1">Installing deal.II using candi (Step #1)</a></li>
+<li><a class="reference internal" href="#installing-deal-ii-manually-step-1">Installing deal.II manually (Step #1)</a><ul>
+<li><a class="reference internal" href="#mpi">MPI</a></li>
+<li><a class="reference internal" href="#numdiff">numdiff</a></li>
+<li><a class="reference internal" href="#p4est">P4est</a></li>
+<li><a class="reference internal" href="#trilinos">Trilinos</a></li>
+<li><a class="reference internal" href="#metis">METIS</a></li>
+<li><a class="reference internal" href="#installation-of-deal-ii">Installation of deal.II</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installing-lethe-step-2">Installing lethe (Step #2)</a></li>
+<li><a class="reference internal" href="#testing-your-installation-step-3">Testing your installation (Step #3)</a></li>
+<li><a class="reference internal" href="#updating-deal-ii">Updating deal.II</a><ul>
+<li><a class="reference internal" href="#through-the-git-repository">Through the git repository</a></li>
+<li><a class="reference internal" href="#with-candi">With candi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    </body>
+</html>

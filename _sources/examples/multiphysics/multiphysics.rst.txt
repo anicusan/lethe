@@ -3,7 +3,11 @@ Multiphysics Examples
 *********************
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
     :glob:
+    :numbered:
 
-    **/*
+    vof
+    heat-transfer
+    tracer
+
