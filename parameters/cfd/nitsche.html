@@ -424,7 +424,7 @@
     set stop if particles lost = true
 
     # Number of Nitsche (quadrature) points to insert in a 1D cell
-    set number of quadrature points = 2
+    set number quadrature points = 2
   end
 end
 </pre></div>
@@ -531,7 +531,7 @@ end
 <p>Particle loss can happen when particles move through multiple cells during a time step. This can be caused by a big <code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">step</span></code> (see <a class="reference internal" href="simulation_control.html"><span class="doc">Simulation Control</span></a>), a high fluid <code class="docutils literal notranslate"><span class="pre">mesh</span> <span class="pre">refinement</span></code> (see <a class="reference internal" href="mesh.html"><span class="doc">Mesh</span></a>), or a high CFL. To prevent particle loss, try increasing the number of <code class="docutils literal notranslate"><span class="pre">particles</span> <span class="pre">sub</span> <span class="pre">iterations</span></code>.</p>
 </div>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">number</span> <span class="pre">of</span> <span class="pre">quadrature</span> <span class="pre">points</span></code>: number of Nitsche (quadrature) points to insert in a 1D cell. The number of inserted points will be higher for higher dimensions. Increasing this number will lead to a higher points density inside the solid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">number</span> <span class="pre">quadrature</span> <span class="pre">points</span></code>: number of Nitsche (quadrature) points to insert in a 1D cell. The number of inserted points will be higher for higher dimensions. Increasing this number will lead to a higher points density inside the solid.</p></li>
 </ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
